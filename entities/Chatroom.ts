@@ -5,7 +5,7 @@ export class Chatroom {
 
     private messages: Message[]
 
-    constructor(private title: string, private users: User[]) {
+    constructor(private title: string, private users?: User[]) {
         this.messages = [];
     }
 
@@ -16,7 +16,7 @@ export class Chatroom {
     }
 
     public getUsers() {return this.users;}
-    public addUser(user: User) {this.users.push(user)}
+    //public addUser(user: User) {this.users.push(user)}
 
     public getMessages() {return this.messages;}
     public addMessage(message: Message) {this.messages.push(message);}

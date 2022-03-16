@@ -1,6 +1,12 @@
 export class User {
 
-    constructor(private title: string, private password: string, private photoUrl?: string) {}
+    constructor(private email: string, private title: string, private password: string, private photoUrl?: string) {}
+
+    public getEmail() {return this.email;}
+    public setEmail(email: string) {
+        this.email = email;
+        return this.email;
+    }
 
     public getTitle() {return this.title;}
     public setTitle(title: string) {
