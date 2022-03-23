@@ -4,6 +4,7 @@ import profileScreen from "./screens/ProfileScreen"
 import userReducer from "./store/reducers/user.reducer";
 import chatReducer from "./store/reducers/chatrooms.reducer";
 import { Provider, useSelector } from "react-redux";
+import { addChatroom } from "./store/actions/chatroom.actions";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -20,9 +21,7 @@ function ChatStackNavigator() {
   
   return (
       <stack.Navigator>
-        for (i=0; i<chatrooms.length; i++) {
-          <stack.Screen name={chatrooms[i].getTitle} component={chatrooms[i]} />
-        }         
+        <stack.Screen />
       </stack.Navigator>
   );
 }
@@ -46,4 +45,9 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
+}
+
+function renderChatroom() {
+  const chatroom: Chatroom = new Chatroom(title);
+  dispatchEvent(addChatroom(chatroom));
 }

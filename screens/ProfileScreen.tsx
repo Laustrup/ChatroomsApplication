@@ -29,8 +29,7 @@ function userIsLoggedIn() {
     const navigation = useNavigation<ScreenNavigationType>();
     const [title] = React.useState('');
 
-    const chatrooms: Chatroom[] = useSelector((state: any) => state.chat.chatrooms);
-
+ 
     const dispatch = useDispatch();
 
     const handleAddChatroom = function() {
@@ -50,7 +49,7 @@ function userIsLoggedIn() {
 }
 
 function userIsNotLoggedIn() {
-
+        
 }
 
     const styles = StyleSheet.create({
