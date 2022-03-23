@@ -18,7 +18,6 @@ function ChatStackNavigator() {
   
   return (
       <stack.Navigator>
-        <stack.Screen name="Profile" component={ProfileScreen} />
         <stack.Screen name="Dashboard" component={DashboardScreen} />
       </stack.Navigator>
   );
@@ -36,9 +35,7 @@ export default function App() {
       <NavigationContainer>
         <tab.Navigator screenOptions={{ headerShown: false }}>
           <tab.Screen name="Profile" component={ProfileScreen} />
-          {}
-          <tab.Screen name="Chatrooms" component={ChatStackNavigator} />
-          {}
+          <tab.Screen name="Dashboard" component={DashboardScreen} />
         </tab.Navigator>
       </NavigationContainer>
     </Provider>
