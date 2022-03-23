@@ -1,4 +1,4 @@
 export type StackParamList = {
-    chatroomScreen: undefined;
-    profileScreen: undefined;
+    Dashboard: undefined;
+    Profile: undefined;
 }

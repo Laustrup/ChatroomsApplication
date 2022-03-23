@@ -1,10 +1,9 @@
 import React from "react";
-import { Chatroom } from "./entities/Chatroom";
-import profileScreen from "./screens/ProfileScreen"
 import userReducer from "./store/reducers/user.reducer";
 import chatReducer from "./store/reducers/chatrooms.reducer";
-import { Provider, useSelector } from "react-redux";
-import { addChatroom } from "./store/actions/chatroom.actions";
+import DashboardScreen from "./screens/DashboardScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,13 +14,12 @@ import { NavigationContainer } from "@react-navigation/native";
 const stack = createNativeStackNavigator<StackParamList>();
 const tab = createBottomTabNavigator();
 
-const chatrooms: Chatroom[] = useSelector((state: any) => state.chat.chatrooms);
-
 function ChatStackNavigator() {
   
   return (
       <stack.Navigator>
-        <stack.Screen />
+        <stack.Screen name="Profile" component={ProfileScreen} />
+        <stack.Screen name="Dashboard" component={DashboardScreen} />
       </stack.Navigator>
   );
 }
@@ -37,7 +35,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <tab.Navigator screenOptions={{ headerShown: false }}>
-          <tab.Screen name="Profile" component={profileScreen} />
+          <tab.Screen name="Profile" component={ProfileScreen} />
           {}
           <tab.Screen name="Chatrooms" component={ChatStackNavigator} />
           {}
@@ -45,9 +43,4 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
-}
-
-function renderChatroom() {
-  const chatroom: Chatroom = new Chatroom(title);
-  dispatchEvent(addChatroom(chatroom));
 }

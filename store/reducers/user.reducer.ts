@@ -1,5 +1,5 @@
 import { User } from "../../entities/User";
-import { SIGNUP } from "../actions/user.actions";
+import { LOGIN, SIGNUP } from "../actions/user.actions";
 
 interface ReduxState {loggedInUser: User}
 
@@ -10,7 +10,10 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
         case SIGNUP: 
             console.log("User is signed up!");
             return { ...state, User: action.payload as User };
-        
+        case LOGIN:
+
+            console.log("User is logged in!");
+            return state;   
         default: return state;
     }
 }
