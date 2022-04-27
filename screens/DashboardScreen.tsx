@@ -8,17 +8,14 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 
-type ScreenNavigationType = NativeStackNavigationProp<
-    StackParamList,
-    "Dashboard"
->
+type ScreenNavigationType = NativeStackNavigationProp<StackParamList,"Dashboard">
 
 export default function ChatroomScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
     const [title, onChangeTitle] = React.useState('');
 
-    const chatrooms: Chatroom[] = useSelector((state: any) => state.chat.chatrooms)
+    const chatrooms: Chatroom[] = useSelector((state: any) => state.chat.chatrooms);
 
     const dispatch = useDispatch();
     
