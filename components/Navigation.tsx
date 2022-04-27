@@ -28,7 +28,15 @@ function ChatStackNavigator() {
     )
 }
 function renderChats() {
+    /*
+    var chats: Element[];
 
+    chatrooms.forEach(chatroom => {
+        chats.pop(<Stack.Screen name="Screen2" component={chatroom} />)
+    })
+    
+    return chats;
+    */
 }
 
 export default function Navigation() {
