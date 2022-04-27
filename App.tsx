@@ -1,43 +1,24 @@
 import React from "react";
+import Navigation from "./components/Navigation";
 import userReducer from "./store/reducers/user.reducer";
 import chatReducer from "./store/reducers/chatrooms.reducer";
-import DashboardScreen from "./screens/DashboardScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StackParamList } from "./typings/navigations";
-import { NavigationContainer } from "@react-navigation/native";
 
-const stack = createNativeStackNavigator<StackParamList>();
-const tab = createBottomTabNavigator();
+const rootReducer = combineReducers({
+  user: userReducer,
+  chat: chatReducer
+});
 
-function ChatStackNavigator() {
-  
-  return (
-      <stack.Navigator>
-        <stack.Screen name="Dashboard" component={DashboardScreen} />
-      </stack.Navigator>
-  );
-}
+export type RootState = ReturnType<typeof rootReducer>
 
-const store = createStore(combineReducers({
-    user: userReducer,
-    chat: chatReducer
-  }), applyMiddleware(ReduxThunk)
-);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <tab.Navigator screenOptions={{ headerShown: false }}>
-          <tab.Screen name="Profile" component={ProfileScreen} />
-          <tab.Screen name="Dashboard" component={DashboardScreen} />
-        </tab.Navigator>
-      </NavigationContainer>
+      <Navigation />
     </Provider>
-  );
+  )
 }
