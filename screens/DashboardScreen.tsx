@@ -10,7 +10,7 @@ import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 
 type ScreenNavigationType = NativeStackNavigationProp<StackParamList,"Dashboard">
 
-export default function ChatroomScreen() {
+export default function DashboardScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
     const [title, onChangeTitle] = React.useState('');
