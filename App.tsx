@@ -15,10 +15,4 @@ export type RootState = ReturnType<typeof rootReducer>
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <Navigation />
-    </Provider>
-  )
-}
+export default function App() { return (<Provider store={store}><Navigation /></Provider>)}

@@ -1,4 +1,4 @@
-import * as SecureStore from "expo-secure-store";
+//import * as SecureStore from "expo-secure-store";
 import { Firebase } from "../../entities/FireBase";
 import { User } from "../../entities/User";
 
@@ -13,17 +13,19 @@ const identityUrl = "https://identitytoolkit.googleapis.com/v1/accounts:"
 
 export const rehydrateUser = (user: User, idToken: string) => {return { type:REHYDRATE_USER, payload: {user,idToken} }}
 
+/*
 export const logout = () => {
     SecureStore.deleteItemAsync("idToken");
     SecureStore.deleteItemAsync("user");
 
     return { type: LOGOUT }
 }
+*/
 
 export const login = function(email: string, password: string) {
     return async (dispatch: any) => {
         const response = await fetch(identityUrl + "signInWithPassword?key=" + apiKey, {
-            method: "GET",
+            method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 "email": email,
@@ -57,8 +59,7 @@ export const signup = function(email: string, title: string, password: string) {
             const data: Firebase = await response.json();
             console.log("data from server", data);
 
-            dispatch({ type: SIGNUP, payload: {email: data.getEmail, idToken: data.getIdToken}
-            })
+            dispatch({ type: SIGNUP, payload: {email: data.getEmail, idToken: data.getIdToken}});
         }
     };
 }

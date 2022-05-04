@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from "react-redux";
 import { StackParamList } from "./../typings/navigations";
+import { RootState } from '../App';
 import SignUpScreen from "../screens/SignUpScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import DashboardScreen from "../screens/DashboardScreen";
@@ -22,7 +23,7 @@ function ProfileNavigator() {
 }
 
 export default function Navigation() {
-    const user = useSelector((state: any) => state.user.loggedInSUser);
+    const user = useSelector((state: RootState) => state.user.loggedInUser);
 
     return (
         <NavigationContainer>

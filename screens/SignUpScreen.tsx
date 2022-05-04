@@ -1,8 +1,8 @@
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { rehydrateUser, signup } from '../store/actions/user.actions';
+import { rehydrateUser, signup, login } from '../store/actions/user.actions';
 import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 
 export default function SignUpScreen() {
