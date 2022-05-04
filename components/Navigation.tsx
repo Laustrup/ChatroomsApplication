@@ -2,18 +2,24 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
 import { useSelector } from "react-redux";
-import { RootState } from "../App";
 import { StackParamList } from "./../typings/navigations";
-import { Chatroom } from "../entities/Chatroom";
-import ReduxState from "../store/reducers/chatrooms.reducer";
 import SignUpScreen from "../screens/SignUpScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import DashboardScreen from "../screens/DashboardScreen";
+import EditScreen from "../screens/EditScreen";
 
 const Stack = createNativeStackNavigator<StackParamList>();
 const Tab = createBottomTabNavigator();
+
+function ProfileNavigator() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Edit" component={EditScreen} />
+        </Stack.Navigator>
+    )
+}
 
 export default function Navigation() {
     const user = useSelector((state: any) => state.user.loggedInSUser);
@@ -22,7 +28,7 @@ export default function Navigation() {
         <NavigationContainer>
             {user !== null ? (
                 <Tab.Navigator screenOptions={{ headerShown: false }}>
-                    <Tab.Screen name="Home" component={ProfileScreen} />
+                    <Tab.Screen name="Home" component={ProfileNavigator} />
                     <Tab.Screen name="Chats" component={DashboardScreen} />
                 </Tab.Navigator>
             ) : (

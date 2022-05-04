@@ -1,22 +1,13 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { addChatroom } from "../store/actions/chatroom.actions";
-import { StackParamList } from "../typings/navigations";
 import { Chatroom } from "../entities/Chatroom";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 
-type ScreenNavigationType = NativeStackNavigationProp<StackParamList,"Dashboard">
-
 export default function DashboardScreen() {
 
-    const navigation = useNavigation<ScreenNavigationType>();
     const [title, onChangeTitle] = React.useState('');
-
-    const chatrooms: Chatroom[] = useSelector((state: any) => state.chat.chatrooms);
-
     const dispatch = useDispatch();
     
     return (
@@ -24,7 +15,7 @@ export default function DashboardScreen() {
             <Text>Your chatrooms</Text>
             
             <FlatList 
-                data={chatrooms}
+                data={useSelector((state: any) => state.chat.chatrooms)}
                 renderItem={renderChatroom}
                 keyExtractor={item => item.getTitle()}
             /> 
@@ -32,9 +23,8 @@ export default function DashboardScreen() {
             <TextInput 
                 onChangeText={onChangeTitle}
                 value={title}
-                placeholder="Chatroom title"
+                placeholder="Write chatroom title..."
             />
-
             <Button title="Create chatroom" onPress={function() {dispatch(addChatroom(new Chatroom(title)));}}/>
         </View>
     )
