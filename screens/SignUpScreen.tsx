@@ -1,9 +1,10 @@
-import * as SecureStore from 'expo-secure-store';
+//import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { rehydrateUser, signup, login } from '../store/actions/user.actions';
 import { style } from "../ressources.styles.stylesheets/GlobalStyle";
+import emailIsValid from "../services/ExceptionHandler";
 
 export default function SignUpScreen() {
 
@@ -12,6 +13,7 @@ export default function SignUpScreen() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
 
+    /*
     useEffect(() => {
         async function readPersistedUserInfo() {
             const token = await SecureStore.getItemAsync("idToken");
@@ -23,15 +25,18 @@ export default function SignUpScreen() {
             if (user) {dispatch(rehydrateUser(user, token!))}
         }
     }, [])
+    */
+    
+    const create = function() { if (emailIsValid(email)) {dispatch(signup(email,title,password));}} 
 
     return (
         <View style={style.container}>
-            <Text>Sign up</Text>
             <TextInput value={title} placeholder="Type your title..." onChangeText={setTitle} />
             <TextInput value={password} placeholder="Type a password..." onChangeText={setPassword} secureTextEntry />
             <TextInput value={email} placeholder="Type your email..." onChangeText={setEmail} />
 
-            <Button title="Sign up" onPress={() => dispatch(signup(email,title,password))} />
+            <Button title="Sign up" onPress={create} />
+            <Button title="Log in" onPress={() => dispatch(login(email,password))} />
         </View>
     )
 }

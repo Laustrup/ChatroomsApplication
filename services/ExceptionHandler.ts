@@ -1,9 +1,12 @@
-function isEmailValid(email: String) {
+export default function emailIsValid(email: String) {
     if (email.includes("@")) {
         const splittedEmail = email.split("@");
-        if (splittedEmail.includes(".")) {
+        if (splittedEmail[1].includes(".")) {
             return true;
         }
     }
-    return false;
+    else {
+        console.log("Email " + email + " is not valid...");
+        return false;
+    }
 }
