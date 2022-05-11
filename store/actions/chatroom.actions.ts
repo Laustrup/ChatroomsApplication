@@ -41,7 +41,7 @@ export const addChatroom = function(chatroom: Chatroom) {
             const data = await response.json();
 
             console.log("data from response.", data);
-            chatroom.declareId = data.name;
+            chatroom.id = data.name;
 
             dispatch({type: ADD_CHATROOM, payload: chatroom});
         }

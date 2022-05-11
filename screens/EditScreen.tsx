@@ -9,13 +9,13 @@ import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 export default function EditScreen() {
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
     // Variables used in this function
-    const [email, setEmail] = useState(user.getEmail);
-    const [title, setTitle] = useState(user.getTitle);
-    const [password, setPassword] = useState(user.getPassword);
+    const [email, setEmail] = useState(user.email);
+    const [title, setTitle] = useState(user.title);
+    const [password, setPassword] = useState(user.password);
     
     // TODO
     const onSave = function() {
-        if (user.getEmail != null && user.getPassword != null) {
+        if (user.email != null && user.password != null) {
 
         } else {
             console.log();
@@ -35,11 +35,11 @@ export default function EditScreen() {
                     set={setTitle}
                     error="Title cannot be empty..." 
             />
-            <Input title="Password:" 
+            {/*<Input title="Password:" 
                     input={password} 
                     set={setPassword}
                     error="Password cannot be empty..." 
-            />
+            />*/}
             <Button title="Change" onPress={
                 function() {
                 console.log("Change in edit is pressed!")}

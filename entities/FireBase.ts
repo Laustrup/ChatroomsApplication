@@ -8,14 +8,6 @@ export class Firebase {
         localId	string	The uid of the newly created user. 
     */
 
-    constructor(private idToken: string, private email: string, private refreshToken: string,
-        private expiresIn: string, private localId: string) {}
-
-    // Only have get methods, for capsulating private attributes, since the firebase values isn't manipulated.
-    public getIdToken() {return this.idToken;}
-    public getEmail() {return this.email;}
-    public getRefreshToken() {return this.refreshToken;}
-    public getExpiresIn() {return this.expiresIn;}
-    public getLocalId() {return this.localId;}
-
+    constructor(public idToken: string, public email: string, public refreshToken: string,
+        public expiresIn: string, public localId: string) {}
 }
