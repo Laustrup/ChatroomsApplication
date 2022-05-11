@@ -9,6 +9,7 @@ import SignUpScreen from "../screens/SignUpScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import DashboardScreen from "../screens/DashboardScreen";
 import EditScreen from "../screens/EditScreen";
+import LogInScreen from '../screens/LogInScreen';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 const Tab = createBottomTabNavigator();
@@ -23,19 +24,23 @@ function ProfileNavigator() {
 }
 
 export default function Navigation() {
+
     const user = useSelector((state: RootState) => state.user.loggedInUser);
 
     return (
         <NavigationContainer>
             {user !== null ? (
+                // This is for when the user is logged in.
                 <Tab.Navigator screenOptions={{ headerShown: false }}>
                     <Tab.Screen name="Home" component={ProfileNavigator} />
                     <Tab.Screen name="Chats" component={DashboardScreen} />
                 </Tab.Navigator>
             ) : (
-                <Stack.Navigator>
-                    <Stack.Screen name="Signup" component={SignUpScreen} />
-                </Stack.Navigator>
+                // This is when the user is not logged in yet.
+                <Tab.Navigator>
+                    <Stack.Screen name="LOGIN" component={LogInScreen} />
+                    <Stack.Screen name="SIGNUP" component={SignUpScreen} />
+                </Tab.Navigator>
             )}
         </NavigationContainer>
     );

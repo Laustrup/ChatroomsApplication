@@ -15,7 +15,7 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
     switch (action.type) {
         case REHYDRATE_USER:
             console.log("User is rehydrated!");
-            return {...state,loggedInUser: action.payload.user,idToken:action.payload.idToken}
+            return {...state,loggedInUser: action.payload.user,idToken: action.payload.idToken}
         case SIGNUP: 
             console.log("User is signed up!");
             return { ...state, loggedInUser: action.payload.user, idToken: action.payload.idToken };

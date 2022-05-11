@@ -30,11 +30,12 @@ export default function EditScreen() {
                     set={setEmail}
                     error="Email cannot be empty..." 
             />
-            <Input title="Title:" 
+            {/* <Input title="Title:" 
                     input={title} 
                     set={setTitle}
                     error="Title cannot be empty..." 
             />
+            */}
             {/*<Input title="Password:" 
                     input={password} 
                     set={setPassword}

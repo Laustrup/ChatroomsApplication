@@ -22,14 +22,14 @@ export const logout = () => {
 }
 */
 
-export const login = function(email: string, title: string) {
-    return async (dispatch: any, getState: any) => {
+export const login = function(email: string, password: string) {
+    return async (dispatch: any) => {
         const response = await fetch(identityUrl + "signInWithPassword?key=" + apiKey, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 email: email,
-                title: title,
+                password: password,
                 returnSecureToken: true
             })
         });
@@ -39,7 +39,7 @@ export const login = function(email: string, title: string) {
             const data: Firebase = await response.json();
             console.log("data from server", data);
 
-            dispatch({ type: LOGIN, payload: { user: new User(email,title), idToken: data.idToken}});
+            dispatch({ type: LOGIN, payload: { user: new User(email), idToken: data.idToken}});
         }
     }
 }

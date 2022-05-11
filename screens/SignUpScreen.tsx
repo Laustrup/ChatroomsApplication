@@ -5,8 +5,13 @@ import { useDispatch } from 'react-redux';
 import { rehydrateUser, signup, login } from '../store/actions/user.actions';
 import { style } from "../ressources.styles.stylesheets/GlobalStyle";
 import emailIsValid from "../services/ExceptionHandler";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamList } from '../typings/navigations';
 
 export default function SignUpScreen() {
+
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamList,"SIGNUP">>();
 
     const [email, setEmail] = useState("");
     const [title, setTitle] = useState("");
@@ -31,12 +36,13 @@ export default function SignUpScreen() {
 
     return (
         <View style={style.container}>
-            <TextInput value={title} placeholder="Type your title..." onChangeText={setTitle} />
+            <Text>Type the informations, in order to sign up:</Text>
+            <TextInput value={title} placeholder="Type a title..." onChangeText={setTitle} />
             <TextInput value={password} placeholder="Type a password..." onChangeText={setPassword} secureTextEntry />
-            <TextInput value={email} placeholder="Type your email..." onChangeText={setEmail} />
+            <TextInput value={email} placeholder="Type an email..." onChangeText={setEmail} />
 
-            <Button title="Sign up" onPress={create} />
-            <Button title="Log in" onPress={() => dispatch(login(email,password))} />
+            <Button title="SIGN UP" onPress={create} />
+            <Button title="GO BACK" onPress={function() {navigation.navigate("LOGIN")}} />
         </View>
     )
 }
