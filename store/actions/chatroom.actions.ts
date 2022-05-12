@@ -1,6 +1,6 @@
 import { Chatroom } from "../../entities/Chatroom";
 
-const fetchUrl: string = "https://chatrooms-44d4d-default-rtdb.europe-west1.firebasedatabase.app/chatrooms.json?auth=";
+const fetchUrl: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatabase.app/chatrooms.json?auth=";
 
 export const FETCH_CHATROOMS = "FETCH_CHATROOMS";
 export const ADD_CHATROOM = "ADD_CHATROOM";

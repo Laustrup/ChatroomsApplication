@@ -2,6 +2,8 @@
 import { Firebase } from "../../entities/FireBase";
 import { User } from "../../entities/User";
 
+import getAuth, {firebase} from "@react-native-firebase/auth";
+
 export const REHYDRATE_USER = "REHYDRATE_USER";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
@@ -11,7 +13,9 @@ export const LOGOUT = "LOGOUT";
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
 const identityUrl = "https://identitytoolkit.googleapis.com/v1/accounts:"
 
-export const rehydrateUser = (user: User, idToken: string) => {return { type:REHYDRATE_USER, payload: {user,idToken} }}
+const auth = getAuth();
+
+export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
 
 /*
 export const logout = () => {
@@ -65,4 +69,19 @@ export const signup = function(email: string, title: string, password: string) {
             dispatch({ type: SIGNUP, payload: { user: new User(email,title), idToken: data.idToken }});
         }
     };
+}
+
+export const logout = function() {auth.signOut().then(() => console.log('User signed out!'));}
+
+
+// TODO
+export const getUser = function(email: string) {
+    return async (dispatch: any) => {
+        const response = await fetch(identityUrl + apiKey)
+        if (!response.ok) {console.log("Couldn't get user...");}
+        else {
+            const data: Firebase = await response.json();
+            dispatch({ type: SIGNUP, payload: { user: new User(email), idToken: data.idToken }});
+        }
+    }
 }

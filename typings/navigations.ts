@@ -1,8 +1,8 @@
 export type StackParamList = {
-    Dashboard: undefined;
-    Profile: undefined;
+    DASHBOARD: undefined;
+    PROFILE: undefined;
     SIGNUP: undefined;
-    Chat: undefined;
-    Edit: undefined;
+    CHAT: undefined;
+    EDIT: undefined;
     LOGIN: undefined;
 }

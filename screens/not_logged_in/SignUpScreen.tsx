@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { rehydrateUser, signup, login } from '../store/actions/user.actions';
-import { style } from "../ressources.styles.stylesheets/GlobalStyle";
-import emailIsValid from "../services/ExceptionHandler";
+import { rehydrateUser, signup, login } from '../../store/actions/user.actions';
+import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
+import emailIsValid from "../../services/ExceptionHandler";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParamList } from '../typings/navigations';
+import { StackParamList } from '../../typings/navigations';
 
 export default function SignUpScreen() {
 
@@ -42,7 +42,6 @@ export default function SignUpScreen() {
             <TextInput value={email} placeholder="Type an email..." onChangeText={setEmail} />
 
             <Button title="SIGN UP" onPress={create} />
-            <Button title="GO BACK" onPress={function() {navigation.navigate("LOGIN")}} />
         </View>
     )
 }
