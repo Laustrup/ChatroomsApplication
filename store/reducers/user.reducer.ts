@@ -1,15 +1,9 @@
 import { User } from "../../entities/User";
 import { LOGIN, SIGNUP, LOGOUT, REHYDRATE_USER } from "../actions/user.actions";
 
-interface ReduxState {
-    loggedInUser: User | null,
-    idToken: string | undefined
-}
+interface ReduxState { loggedInUser: User | null, idToken: string | undefined }
 
-const initialState: ReduxState = {
-    loggedInUser: null,
-    idToken: undefined
-}
+const initialState: ReduxState = { loggedInUser: null, idToken: undefined }
 
 const userReducer = (state: ReduxState = initialState, action: any) => {
     switch (action.type) {

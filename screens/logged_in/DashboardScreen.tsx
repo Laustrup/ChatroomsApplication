@@ -1,6 +1,6 @@
 import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addChatroom } from "../../store/actions/chatroom.actions";
+import { addChatroom } from "../../store/actions/dashboard.actions";
 import { Chatroom } from "../../entities/Chatroom";
 import React from "react";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
@@ -27,7 +27,9 @@ export default function DashboardScreen() {
             
             <FlatList 
                 data={useSelector((state: any) => state.chat.chatrooms)}
-                renderItem={renderChatroom}
+                renderItem={function renderChatroom({item}: {item:any}) {
+                    return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />}
+                }
                 keyExtractor={item => item.title}
             /> 
             
@@ -49,5 +51,3 @@ export default function DashboardScreen() {
         </View>
     )
 }
-
-function renderChatroom({item}: {item:any}) { return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />}

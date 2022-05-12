@@ -76,6 +76,10 @@ export const logout = function() {auth.signOut().then(() => console.log('User si
 
 // TODO
 export const getUser = function(email: string) {
+
+    return 
+
+    /*
     return async (dispatch: any) => {
         const response = await fetch(identityUrl + apiKey)
         if (!response.ok) {console.log("Couldn't get user...");}
@@ -84,4 +88,5 @@ export const getUser = function(email: string) {
             dispatch({ type: SIGNUP, payload: { user: new User(email), idToken: data.idToken }});
         }
     }
+    */
 }

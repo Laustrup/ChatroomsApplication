@@ -3,6 +3,7 @@ import { User } from "./User";
 export class Message {
 
     private isRead: boolean;
+    public id: string = "";
     public timestamp: Date;
 
     constructor(public author: User, public content: string) {
