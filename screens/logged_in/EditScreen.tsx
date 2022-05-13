@@ -5,6 +5,9 @@ import { RootState } from '../../App';
 import { User } from '../../entities/User';
 import Input from "../../components/Input";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
+import { StackParamList } from '../../typings/navigations';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export default function EditScreen() {
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
@@ -43,7 +46,13 @@ export default function EditScreen() {
             />
             <Button title="Change" onPress={
                 function() {
-                console.log("Change in edit is pressed!")}
+                onSave();
+                console.log("Change in edit is pressed!");}
+                } />
+
+            <Button title="GO BACK" onPress={
+                function() {
+                    useNavigation<NativeStackNavigationProp<StackParamList,"EDIT">>().navigate("CHAT");} 
                 } />
         </View>
     )

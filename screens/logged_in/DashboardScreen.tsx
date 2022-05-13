@@ -11,8 +11,6 @@ import { User } from "../../entities/User";
 import { RootState } from "../../App";
 import { getUser } from "../../store/actions/user.actions";
 
-const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
-
 export default function DashboardScreen() {
 
     const [title, changeTitle] = React.useState("");
@@ -28,7 +26,9 @@ export default function DashboardScreen() {
             <FlatList 
                 data={useSelector((state: any) => state.chat.chatrooms)}
                 renderItem={function renderChatroom({item}: {item:any}) {
-                    return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />}
+                    return <Button title={item.getTitle} onPress={function() {
+                        useNavigation<NativeStackNavigationProp<StackParamList,"DASHBOARD">>().navigate("CHAT")}} />
+                    }
                 }
                 keyExtractor={item => item.title}
             /> 

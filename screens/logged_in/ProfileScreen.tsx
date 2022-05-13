@@ -7,7 +7,7 @@ import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User } from "../../entities/User";
-import { logout } from "../../store/actions/user.actions";
+//import { logout } from "../../store/actions/user.actions";
 
 export default function ProfileScreen() {
 
@@ -25,7 +25,7 @@ export default function ProfileScreen() {
             <Text>Email - {email}</Text>
 
             <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}}/>
-            <Button title="SIGN OUT" onPress={logout} />
+            {/* <Button title="SIGN OUT" onPress={logout} /> */}
         </View>
     );
 }

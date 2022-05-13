@@ -2,7 +2,7 @@
 import { Firebase } from "../../entities/FireBase";
 import { User } from "../../entities/User";
 
-import getAuth, {firebase} from "@react-native-firebase/auth";
+// import getAuth, {firebase} from "@react-native-firebase/auth";
 
 export const REHYDRATE_USER = "REHYDRATE_USER";
 export const SIGNUP = "SIGNUP";
@@ -13,7 +13,7 @@ export const LOGOUT = "LOGOUT";
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
 const identityUrl = "https://identitytoolkit.googleapis.com/v1/accounts:"
 
-const auth = getAuth();
+//const auth = getAuth();
 
 export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
 
@@ -71,7 +71,7 @@ export const signup = function(email: string, title: string, password: string) {
     };
 }
 
-export const logout = function() {auth.signOut().then(() => console.log('User signed out!'));}
+//export const logout = function() {auth.signOut().then(() => console.log('User signed out!'));}
 
 
 // TODO

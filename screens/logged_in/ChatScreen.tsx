@@ -10,8 +10,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Message } from "../../entities/Message";
 import { RootState } from "../../App";
 
-const navigation = useNavigation<NativeStackNavigationProp<StackParamList>>();
-
 export default function ChatScreen() {
 
     const [content, setContent] = useState("");
@@ -22,11 +20,8 @@ export default function ChatScreen() {
         <View style={style.container}>
             
             <FlatList 
-                data={useSelector((state: any) => state.chat.chatrooms)}
-                renderItem={function renderChatroom({item}: {item:any}) {
-                    return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />}
-                }
-                keyExtractor={item => item.title}
+                data={useSelector((state: any) => state.chat.chatrooms[state.chat.chatIndex])}
+                renderItem={renderMessage} 
             />
 
             <TextInput 
@@ -39,7 +34,20 @@ export default function ChatScreen() {
                 dispatch(addMessage(new Message(useSelector((state: RootState) => state.user.loggedInUser),content)))}
             } />
 
-            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD")}}/>
+            <Button title="DASHBOARD" onPress={function() {
+                useNavigation<NativeStackNavigationProp<StackParamList,"CHAT">>().navigate("DASHBOARD")}
+                }/>
         </View>
     );
 }
+
+const renderMessage = ({item}: {item:Message}) => (
+    
+    <>
+    <Text>Written by {item.author}</Text>
+    <Text>{item.timestamp}</Text>
+    <Text>{item.content}</Text>
+    <Text>{item.isMessageRead()}</Text>
+    </>
+
+)
