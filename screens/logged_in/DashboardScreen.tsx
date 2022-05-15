@@ -9,12 +9,18 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User } from "../../entities/User";
 import { RootState } from "../../App";
-import { getUser } from "../../store/actions/user.actions";
+import { get } from "../../store/actions/user.actions";
+
+type ScreenNavigationType = NativeStackNavigationProp<
+    StackParamList,
+    "DASHBOARD"
+>
 
 export default function DashboardScreen() {
 
-    const [title, changeTitle] = React.useState("");
+    const navigation = useNavigation<ScreenNavigationType>();
 
+    const [title, changeTitle] = React.useState("");
     const [email, setEmail] = React.useState("");
 
     const dispatch = useDispatch();
@@ -26,8 +32,7 @@ export default function DashboardScreen() {
             <FlatList 
                 data={useSelector((state: any) => state.chat.chatrooms)}
                 renderItem={function renderChatroom({item}: {item:any}) {
-                    return <Button title={item.getTitle} onPress={function() {
-                        useNavigation<NativeStackNavigationProp<StackParamList,"DASHBOARD">>().navigate("CHAT")}} />
+                    return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />
                     }
                 }
                 keyExtractor={item => item.title}
@@ -46,7 +51,7 @@ export default function DashboardScreen() {
             />
 
             <Button title="Create chatroom" onPress={function() {
-                dispatch(addChatroom(new Chatroom(title,[useSelector((state: RootState) => state.user.loggedInUser),getUser(email)])));}
+                dispatch(addChatroom(new Chatroom(title,[useSelector((state: RootState) => state.user.loggedInUser),get(email)])));}
                 }/>
         </View>
     )

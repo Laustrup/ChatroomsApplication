@@ -10,7 +10,14 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Message } from "../../entities/Message";
 import { RootState } from "../../App";
 
+type ScreenNavigationType = NativeStackNavigationProp<
+    StackParamList,
+    "CHAT"
+>
+
 export default function ChatScreen() {
+
+    const navigation = useNavigation<ScreenNavigationType>();
 
     const [content, setContent] = useState("");
 
@@ -34,9 +41,7 @@ export default function ChatScreen() {
                 dispatch(addMessage(new Message(useSelector((state: RootState) => state.user.loggedInUser),content)))}
             } />
 
-            <Button title="DASHBOARD" onPress={function() {
-                useNavigation<NativeStackNavigationProp<StackParamList,"CHAT">>().navigate("DASHBOARD")}
-                }/>
+            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD")}}/>
         </View>
     );
 }
@@ -47,7 +52,11 @@ const renderMessage = ({item}: {item:Message}) => (
     <Text>Written by {item.author}</Text>
     <Text>{item.timestamp}</Text>
     <Text>{item.content}</Text>
-    <Text>{item.isMessageRead()}</Text>
+    {item.isMessageRead() === true ? (
+        <Text>Read</Text>
+    ) : (
+        <Text>unRead</Text>
+    )}
     </>
 
 )

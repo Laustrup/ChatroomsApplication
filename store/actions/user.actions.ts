@@ -7,13 +7,14 @@ import { User } from "../../entities/User";
 export const REHYDRATE_USER = "REHYDRATE_USER";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
+export const EDIT = "EDIT";
 export const LOGOUT = "LOGOUT";
 
 // Fetch url values
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
 const identityUrl = "https://identitytoolkit.googleapis.com/v1/accounts:"
 
-//const auth = getAuth();
+// const auth = getAuth();
 
 export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
 
@@ -71,22 +72,40 @@ export const signup = function(email: string, title: string, password: string) {
     };
 }
 
-//export const logout = function() {auth.signOut().then(() => console.log('User signed out!'));}
-
+// export const logout = function() {auth.signOut().then(() => console.log('User signed out!'));}
 
 // TODO
-export const getUser = function(email: string) {
-
-    return 
-
-    /*
+export const get = function(email: string) {
     return async (dispatch: any) => {
-        const response = await fetch(identityUrl + apiKey)
+        const response = await fetch(identityUrl + "getUser?key=" + apiKey,{
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ email: email, returnSecureToken: true })
+        });
         if (!response.ok) {console.log("Couldn't get user...");}
         else {
             const data: Firebase = await response.json();
             dispatch({ type: SIGNUP, payload: { user: new User(email), idToken: data.idToken }});
         }
     }
-    */
+}
+
+export const edit = function(user: User) {
+    return async (dispatch: any) => {
+        const response = await fetch(identityUrl + "editUser?key=" + apiKey, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                email: user.email,
+                title: user.title,
+                password: user.password,
+                returnSecureToken: true
+            })
+        });
+        if (!response.ok) { console.log("Couldn't edit user..."); }
+        else {
+            const data: Firebase = await response.json();
+            dispatch({type: EDIT, payload: { user: user, idToken: data.idToken }});
+        }
+    }
 }

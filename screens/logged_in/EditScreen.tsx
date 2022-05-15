@@ -8,24 +8,21 @@ import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from '../../typings/navigations';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { edit, signup } from '../../store/actions/user.actions';
+
+type ScreenNavigationType = NativeStackNavigationProp<
+    StackParamList,
+    "EDIT"
+>
 
 export default function EditScreen() {
+    const navigation = useNavigation<ScreenNavigationType>();
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
     // Variables used in this function
     const [email, setEmail] = useState(user.email);
     const [title, setTitle] = useState(user.getTitle());
     const [password, setPassword] = useState(user.getPassword());
     
-    // TODO
-    const onSave = function() {
-        if (user.email != null && user.password != null) {
-
-        } 
-        else {
-            console.log();
-        }
-    }
-
     return (
         <View style={style.container}>
             <Text>Edit</Text>
@@ -46,13 +43,14 @@ export default function EditScreen() {
             />
             <Button title="Change" onPress={
                 function() {
-                onSave();
-                console.log("Change in edit is pressed!");}
-                } />
+                    if (user.email != null) { edit(new User(email,title,password)); } 
+                    else { console.log("User is not logged in, therefore user can't be edited..."); }
+                } 
+            } />
 
             <Button title="GO BACK" onPress={
                 function() {
-                    useNavigation<NativeStackNavigationProp<StackParamList,"EDIT">>().navigate("CHAT");} 
+                    navigation.navigate("CHAT");} 
                 } />
         </View>
     )

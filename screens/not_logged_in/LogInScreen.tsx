@@ -9,8 +9,6 @@ import { StackParamList } from "../../typings/navigations";
 
 export default function IntroductionScreen() {
 
-    const navigation = useNavigation<NativeStackNavigationProp<StackParamList,"LOGIN">>();
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();

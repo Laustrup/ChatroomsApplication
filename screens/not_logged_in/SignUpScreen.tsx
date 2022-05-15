@@ -10,9 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParamList } from '../../typings/navigations';
 
 export default function SignUpScreen() {
-
-    const navigation = useNavigation<NativeStackNavigationProp<StackParamList,"SIGNUP">>();
-
+    
     const [email, setEmail] = useState("");
     const [title, setTitle] = useState("");
     const [password, setPassword] = useState("");
