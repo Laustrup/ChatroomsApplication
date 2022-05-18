@@ -5,7 +5,6 @@ const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatab
 
 export const FETCH_CHATROOMS = "FETCH_CHATROOMS";
 export const ADD_CHATROOM = "ADD_CHATROOM";
-export const WRITE_MESSAGE = "WRITE_MESSAGE";
 
 // UrlCommand consists of the value of which is used in the fetch url for different actions
 async function firebaseResponse(getState: any, body?: any) {
@@ -56,22 +55,4 @@ export const addChatroom = function(chatroom: Chatroom) {
             dispatch({type: ADD_CHATROOM, payload: chatroom});
         }
     };
-}
-
-export const addMessage = function(message: Message) {
-    return async (dispatch: any, getState: any) => {
-        const response = await firebaseResponse(getState, message);
-
-        if (!response.ok) {
-            console.log("Response from adding message was not ok...");
-        }
-        else {
-            const data = await response.json();
-
-            console.log("data from response.", data);
-            message.id = data.name;
-
-            dispatch({type: WRITE_MESSAGE, payload: message});
-        }
-    }
 }

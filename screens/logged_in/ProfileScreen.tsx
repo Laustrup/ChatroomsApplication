@@ -20,6 +20,8 @@ export default function ProfileScreen() {
 
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
 
+    console.log("Logged in user",user)
+
     return (
         <View style={style.container}>
             <Text>Welcome {user.title}</Text>

@@ -3,7 +3,7 @@ import { Text, TextInput, View } from 'react-native';
 import { style } from '../ressources.styles.stylesheets/GlobalStyle';
 
 const Input = ({title, input, error, set}:
-    {title: string, input: string, error: string, set: (i: string) => void}) => {
+    {title: string, input: string | undefined, error: string, set: (i: string) => void}) => {
 
     const [entered, isEntered] = useState(false);
 

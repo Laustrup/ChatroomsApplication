@@ -10,6 +10,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User } from "../../entities/User";
 import { RootState } from "../../App";
 import { get } from "../../store/actions/user.actions";
+import { fetchChatroom } from "../../store/actions/chatroom.action";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -32,7 +33,11 @@ export default function DashboardScreen() {
             <FlatList 
                 data={useSelector((state: any) => state.chat.chatrooms)}
                 renderItem={function renderChatroom({item}: {item:any}) {
-                    return <Button title={item.getTitle} onPress={function() {navigation.navigate("CHAT")}} />
+                    return <Button title={item.getTitle} onPress={function() {
+                        // TODO get Index of current chatroom
+                        fetchChatroom(item);
+                        navigation.navigate("CHAT")}
+                    } />
                     }
                 }
                 keyExtractor={item => item.title}

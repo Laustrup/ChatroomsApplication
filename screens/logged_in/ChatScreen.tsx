@@ -1,6 +1,6 @@
 import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessage } from "../../store/actions/dashboard.actions";
+import { addMessage } from "../../store/actions/chatroom.action";
 import { Chatroom } from "../../entities/Chatroom";
 import React, { useState } from "react";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
@@ -34,7 +34,7 @@ export default function ChatScreen() {
             <TextInput 
                 onChangeText={setContent}
                 value={content}
-                placeholder="Enter email of other user..."
+                placeholder="Message..."
             />
 
             <Button title="WRITE MESSAGE" onPress={function() {

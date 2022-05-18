@@ -8,7 +8,7 @@ import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from '../../typings/navigations';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { edit, signup } from '../../store/actions/user.actions';
+import { edit } from '../../store/actions/user.actions';
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -20,8 +20,8 @@ export default function EditScreen() {
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
     // Variables used in this function
     const [email, setEmail] = useState(user.email);
-    const [title, setTitle] = useState(user.getTitle());
-    const [password, setPassword] = useState(user.getPassword());
+    const [title, setTitle] = useState(user.title);
+    const [password, setPassword] = useState(user.password);
     
     return (
         <View style={style.container}>

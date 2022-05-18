@@ -78,13 +78,13 @@ export const login = function(email: string, password: string) {
     return (dispatch: any) => {firebaseResponse(new User(email,password),UrlCommand.SignInWithPassword, dispatch, LOGIN);}
 }
 export const signup = function(email: string, password: string, title: string) {
-    return async (dispatch: any) => { firebaseResponse(new User(email,password,title),UrlCommand.SignUp, dispatch, SIGNUP); }
+    return (dispatch: any) => { firebaseResponse(new User(email,password,title),UrlCommand.SignUp, dispatch, SIGNUP); }
 }
 export const get = function(email: string) {
-    return async (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.Lookup, dispatch, GET); }
+    return (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.Lookup, dispatch, GET); }
 }
 export const edit = function(user: User) {
-    return async (dispatch: any) => { firebaseResponse(user,UrlCommand.Update, dispatch, EDIT); }
+    return (dispatch: any) => { firebaseResponse(user,UrlCommand.Update, dispatch, EDIT); }
 }
 
 /*
