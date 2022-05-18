@@ -2,10 +2,10 @@ import { Chatroom } from "../../entities/Chatroom";
 import { Message } from "../../entities/Message";
 import { ADD_CHATROOM, FETCH_CHATROOMS } from "../actions/dashboard.actions";
 
-interface ReduxState { chatrooms: Chatroom[];}
+interface ReduxState { chatrooms: Chatroom[]; }
 const initialState: ReduxState = { chatrooms: [] }
 
-interface ReduxAction { type: string, payload?: number | string | Chatroom | Message }
+interface ReduxAction { type: string, payload?: number | string | Chatroom }
 
 const dashboardReducer = (state: ReduxState = initialState, action: ReduxAction) => {
     switch (action.type) {

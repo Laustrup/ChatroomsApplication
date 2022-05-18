@@ -35,7 +35,7 @@ export default function DashboardScreen() {
                 renderItem={function renderChatroom({item}: {item:any}) {
                     return <Button title={item.getTitle} onPress={function() {
                         // TODO get Index of current chatroom
-                        fetchChatroom(item);
+                        fetchChatroom(1);
                         navigation.navigate("CHAT")}
                     } />
                     }

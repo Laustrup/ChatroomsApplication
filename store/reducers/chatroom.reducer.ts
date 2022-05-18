@@ -1,12 +1,11 @@
 import { FETCH_CHATROOM, WRITE_MESSAGE } from "../actions/chatroom.action";
 import { Chatroom } from "../../entities/Chatroom";
 import { Message } from "../../entities/Message";
-import { User } from "../../entities/User";
 
-interface ReduxState { chatroom: Chatroom; }
-const initialState: ReduxState = {chatroom: new Chatroom("Initial chatroom",[new User("email")])}
+interface ReduxState { chatroom: Chatroom | null; }
+const initialState: ReduxState = {chatroom: null}
 
-interface ReduxAction {type: string, payload?: number | string | Message | Chatroom }
+//interface ReduxAction {type: string, payload?: number | string | Message | Chatroom }
 
 const chatroomReducer = (state: ReduxState = initialState, action: any) => {
     switch (action.type) {
@@ -16,8 +15,12 @@ const chatroomReducer = (state: ReduxState = initialState, action: any) => {
             return {...state, chatroom: action.payload};
         case WRITE_MESSAGE:
             console.log("Write message payload...", action.payload);
-            state.chatroom.messages.push(action.payload as Message);
+            if (state.chatroom!=null) { state.chatroom.messages.push(action.payload as Message); }
             return { ...state, chatroom: state.chatroom};
+        
+        default: 
+            console.log("Case is default!");
+            return state;
     }
 }
 

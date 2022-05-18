@@ -1,14 +1,11 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../App";
-
 import { Message } from "../../entities/Message";
 
-export const WRITE_MESSAGE = "WRITE_MESSAGE";
 export const FETCH_CHATROOM = "FETCH_CHATROOM";
+export const WRITE_MESSAGE = "WRITE_MESSAGE";
 
 export const fetchChatroom = function(index: number) {
     return (dispatch: any, getState: any) => {
-        const chatroom = getState.chat.chatrooms[index];
+        const chatroom = getState().chatroom.chatrooms[index];
         dispatch({type: FETCH_CHATROOM, chatroom})
     };
 }
