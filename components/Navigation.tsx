@@ -8,7 +8,7 @@ import { RootState } from '../App';
 import SignUpScreen from "../screens/not_logged_in/SignUpScreen";
 import ProfileScreen from "../screens/logged_in/ProfileScreen";
 import DashboardScreen from "../screens/logged_in/DashboardScreen";
-import ChatScreen from '../screens/logged_in/ChatScreen';
+import ChatScreen from '../screens/logged_in/BoardScreen';
 import EditScreen from "../screens/logged_in/EditScreen";
 import LogInScreen from '../screens/not_logged_in/LogInScreen';
 
@@ -28,7 +28,7 @@ function ChatNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="DASHBOARD" component={DashboardScreen} />
-            <Stack.Screen name="CHAT" component={ChatScreen} />
+            <Stack.Screen name="BOARD" component={ChatScreen} />
         </Stack.Navigator>
     )
 }
@@ -43,7 +43,7 @@ export default function Navigation() {
                 // This is for when the user is logged in.
                 <Tab.Navigator screenOptions={{ headerShown: false }}>
                     <Tab.Screen name="Home" component={ProfileNavigator} />
-                    <Tab.Screen name="Chats" component={ChatNavigator} />
+                    <Tab.Screen name="boards" component={ChatNavigator} />
                 </Tab.Navigator>
             ) : (
                 // This is when the user is not logged in yet.

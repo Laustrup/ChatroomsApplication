@@ -1,7 +1,7 @@
 import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addChatroom } from "../../store/actions/dashboard.actions";
-import { Chatroom } from "../../entities/Chatroom";
+import { addBoard } from "../../store/actions/dashboard.actions";
+import { Board } from "../../entities/Board";
 import React from "react";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
@@ -10,7 +10,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User } from "../../entities/User";
 import { RootState } from "../../App";
 import { get } from "../../store/actions/user.actions";
-import { fetchChatroom } from "../../store/actions/chatroom.action";
+import { fetchChatroom as fetchBoard } from "../../store/actions/board.action";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -28,15 +28,15 @@ export default function DashboardScreen() {
     
     return (
         <View style={style.container}>
-            <Text>Your chatrooms</Text>
+            <Text>Your boards</Text>
             
             <FlatList 
-                data={useSelector((state: any) => state.dashboard.chatrooms)}
-                renderItem={function renderChatroom({item}: {item:any}) {
+                data={useSelector((state: any) => state.dashboard.boards)}
+                renderItem={function({item}: {item:any}) {
                     return <Button title={item.getTitle} onPress={function() {
-                        // TODO get Index of current chatroom
-                        fetchChatroom(1);
-                        navigation.navigate("CHAT")}
+                        // TODO get Index of current board
+                        fetchBoard(1);
+                        navigation.navigate("BOARD")}
                     } />
                     }
                 }
@@ -46,18 +46,12 @@ export default function DashboardScreen() {
             <TextInput 
                 onChangeText={changeTitle}
                 value={title}
-                placeholder="Write chatroom title..."
+                placeholder="Write board title..."
             />
 
-            <TextInput 
-                onChangeText={setEmail}
-                value={email}
-                placeholder="Enter email of other user..."
-            />
-
-            <Button title="Create chatroom" onPress={function() {
-                dispatch(addChatroom(new Chatroom(title,[useSelector((state: RootState) => state.user.loggedInUser),get(email)])));}
-                }/>
+            <Button title="Create board" onPress={function() {
+                dispatch(addBoard(new Board(title,[])));}
+            }/>
         </View>
     )
 }

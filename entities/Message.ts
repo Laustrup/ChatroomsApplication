@@ -2,19 +2,7 @@ import { User } from "./User";
 
 export class Message {
 
-    private isRead: boolean;
-    public id: string = "";
     public timestamp: Date;
 
-    constructor(public author: User, public content: string) {
-        this.isRead = false;
-        this.timestamp = new Date();
-    }
-    public isMessageRead() {return this.isRead;}
-    public changeIsRead() {
-        if (!this.isRead) {
-            this.isRead = true;
-        }
-    }
-
+    constructor(public content: string, public id?: string) {this.timestamp = new Date();}
 }
