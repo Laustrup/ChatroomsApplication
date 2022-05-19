@@ -11,7 +11,6 @@ const dashboardReducer = (state: ReduxState = initialState, action: ReduxAction)
         case ADD_BOARD:
             console.log("Add board payload...", action.payload);
             const board = action.payload as Board;
-            state.boards.push(board);
             return { ...state, boards: [...state.boards, board] };
         case FETCH_BOARDS: 
             console.log("Fetching board!");

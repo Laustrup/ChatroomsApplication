@@ -1,24 +1,25 @@
 import { Board } from "../../entities/Board";
-import { Message } from "../../entities/Message";
 
-const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatabase.app/chatrooms.json?auth=";
+const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatabase.app/boards.json?auth=";
 
 export const FETCH_BOARDS = "FETCH_CHATROOMS";
 export const ADD_BOARD = "ADD_CHATROOM";
 
 // UrlCommand consists of the value of which is used in the fetch url for different actions
-async function firebaseResponse(getState: any, body?: any) {
-    if (body!=null) {
-        return (await fetch(url + getState().user.getIdToken, {
+async function firebaseResponse(getState: any, body?: Board) {
+    console.log(body);
+    if (body==undefined) {
+        console.log("Response will get boards!")
+        return (await fetch(url + getState().user.idToken, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"}
+        }));   
+    }
+    else {
+        return (await fetch(url + getState().user.idToken, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(body)
-        }));        
-    }
-    else {
-        return (await fetch(url + getState().user.getIdToken, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
         }));
     }
 }

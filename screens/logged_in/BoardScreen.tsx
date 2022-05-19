@@ -32,7 +32,7 @@ export default function ChatScreen() {
                         <Text>{item.content}</Text>
                     </>
                 )
-                }} 
+                }}
             />
 
             <TextInput 
