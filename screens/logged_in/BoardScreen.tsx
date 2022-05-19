@@ -44,7 +44,6 @@ export default function ChatScreen() {
             <Button title="WRITE MESSAGE" onPress={function() {
                 dispatch(addMessage(new Message(content)));}
             } />
-
             <Button title="DELETE BOARD" onPress={function() {
                 deleteBoard(useSelector((state: any) => state.board.board));
                 navigation.navigate("DASHBOARD");

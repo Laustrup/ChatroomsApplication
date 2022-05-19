@@ -7,15 +7,14 @@ export const FETCH_BOARD = "FETCH_CHATROOM";
 export const WRITE_MESSAGE = "WRITE_MESSAGE";
 export const DELETE_BOARD = "DELETE_BOARD";
 
-export const fetchBoard = function(index: number) {
-    return (dispatch: any, getState: any) => {
-        const chatroom = getState().chatroom.chatrooms[index];
-        dispatch({type: FETCH_BOARD, chatroom})
-    };
+export const fetchBoard = function(board: Board) {
+    return (dispatch: any) => {
+        dispatch({type: FETCH_BOARD, payload: board})
+    }
 }
 
 export const addMessage = function(message: Message) {
-    return (dispatch: any) => { dispatch({type: WRITE_MESSAGE, message}) }
+    return (dispatch: any) => { dispatch({type: WRITE_MESSAGE, payload: message}) }
 }
 
 export const deleteBoard = function(board: Board) {

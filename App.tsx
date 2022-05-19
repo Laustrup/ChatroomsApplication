@@ -10,7 +10,7 @@ import ReduxThunk from "redux-thunk";
 const rootReducer = combineReducers({
   user: userReducer,
   dashboard: dashboardReducer,
-  chatroom: boardReducer
+  board: boardReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>

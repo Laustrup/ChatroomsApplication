@@ -32,9 +32,9 @@ export default function DashboardScreen() {
             
             <FlatList 
                 data={useSelector((state: any) => state.dashboard.boards)}
-                renderItem={function({item}: {item:Board}) {
+                renderItem={function({item}: {item: Board}) {
                     return <Button title={item.title} onPress={function() {
-                        fetchBoard(item.index-1);
+                        fetchBoard(item);
                         navigation.navigate("BOARD")}
                         } />
                     }

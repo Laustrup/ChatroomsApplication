@@ -4,7 +4,7 @@ import { Button, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { rehydrateUser, signup, login } from '../../store/actions/user.actions';
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
-import emailIsValid from "../../services/ExceptionHandler";
+import { emailIsValid } from "../../services/ExceptionHandler";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParamList } from '../../typings/navigations';
