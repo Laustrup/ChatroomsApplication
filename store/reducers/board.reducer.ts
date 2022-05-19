@@ -1,6 +1,7 @@
-import { FETCH_BOARD, WRITE_MESSAGE } from "../actions/board.action";
+import { DELETE_BOARD, FETCH_BOARD, WRITE_MESSAGE } from "../actions/board.action";
 import { Board } from "../../entities/Board";
 import { Message } from "../../entities/Message";
+import { fetchBoards } from "../actions/dashboard.actions";
 
 interface ReduxState { board: Board | null; }
 const initialState: ReduxState = {board: null}
@@ -17,7 +18,9 @@ const boardReducer = (state: ReduxState = initialState, action: any) => {
             console.log("Write message payload...", action.payload);
             if (state.board!=null) { state.board.messages.push(action.payload as Message); }
             return { ...state, board: state.board};
-        
+        case DELETE_BOARD:
+            return {...state, board: action.payload };
+
         default: 
             console.log("Case is default!", action.payload);
             return state;

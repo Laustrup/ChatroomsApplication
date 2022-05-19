@@ -1,4 +1,5 @@
 import { Board } from "../../entities/Board";
+import { boardTitleExists } from "../../services/ExceptionHandler";
 
 const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatabase.app/boards.json?auth=";
 
@@ -31,6 +32,8 @@ export const fetchBoards = function() {
         if (!response.ok) { console.log("Response from fetching boards was not ok..."); }
         else {
             const data = await response.json();
+            console.log("data from response...", data);
+            
             let boards: Board[] = [];
 
             for (const i in data) {boards.push(data[i]);}
@@ -42,18 +45,19 @@ export const fetchBoards = function() {
 
 export const addBoard = function(board: Board) {
     return async (dispatch: any, getState: any) => {
-        const response = await firebaseResponse(getState, board);
 
-        if (!response.ok) {
-            console.log("Response from adding board was not ok...");
-        }
-        else {
-            const data = await response.json();
-
-            console.log("data from response.", data);
-            board.id = data.name;
-
-            dispatch({type: ADD_BOARD, payload: board});
+        if (!boardTitleExists) {
+            const response = await firebaseResponse(getState, board);
+            
+            if (!response.ok) { console.log("Response from adding board was not ok..."); }
+            else {
+                const data = await response.json();
+    
+                console.log("data from response...", data);
+                board.id = data.name;
+    
+                dispatch({type: ADD_BOARD, payload: board});
+            }
         }
     };
 }

@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
+
 // Not necessarily, since firebase validates as well.
-export default function emailIsValid(email: String) {
+export function emailIsValid(email: String) {
     if (email.includes("@")) {
         const splittedEmail = email.split("@");
         if (splittedEmail[1].includes(".")) {
@@ -11,4 +13,11 @@ export default function emailIsValid(email: String) {
         console.log("Email " + email + " is not valid...");
         return false;
     }
+}
+
+export function boardTitleExists(title: string) {
+    useSelector((state: any) => state.dashboard.boards).forEach((board: { title: string; }) => {
+        if (board.title == title) {return true;}
+    });
+    return false;
 }

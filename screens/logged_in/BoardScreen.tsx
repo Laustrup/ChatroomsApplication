@@ -1,6 +1,6 @@
 import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessage } from "../../store/actions/board.action";
+import { addMessage, deleteBoard } from "../../store/actions/board.action";
 import React, { useState } from "react";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
@@ -42,10 +42,15 @@ export default function ChatScreen() {
             />
 
             <Button title="WRITE MESSAGE" onPress={function() {
-                dispatch(addMessage(new Message(content)))}
+                dispatch(addMessage(new Message(content)));}
             } />
 
-            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD")}}/>
+            <Button title="DELETE BOARD" onPress={function() {
+                deleteBoard(useSelector((state: any) => state.board.board));
+                navigation.navigate("DASHBOARD");
+                }
+            }></Button>
+            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}}/>
         </View>
     );
 }
