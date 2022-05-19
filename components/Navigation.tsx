@@ -8,7 +8,7 @@ import { RootState } from '../App';
 import SignUpScreen from "../screens/not_logged_in/SignUpScreen";
 import ProfileScreen from "../screens/logged_in/ProfileScreen";
 import DashboardScreen from "../screens/logged_in/DashboardScreen";
-import ChatScreen from '../screens/logged_in/BoardScreen';
+import BoardScreen from '../screens/logged_in/BoardScreen';
 import EditScreen from "../screens/logged_in/EditScreen";
 import LogInScreen from '../screens/not_logged_in/LogInScreen';
 
@@ -28,7 +28,7 @@ function ChatNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="DASHBOARD" component={DashboardScreen} />
-            <Stack.Screen name="BOARD" component={ChatScreen} />
+            <Stack.Screen name="BOARD" component={BoardScreen} />
         </Stack.Navigator>
     )
 }

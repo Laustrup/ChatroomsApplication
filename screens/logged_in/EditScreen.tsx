@@ -9,6 +9,7 @@ import { StackParamList } from '../../typings/navigations';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { edit } from '../../store/actions/user.actions';
+import { ErrorTypes } from '../../entities/ErrorTypes';
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -37,11 +38,11 @@ export default function EditScreen() {
             <Input title="Display name:" 
                     input={displayName} 
                     set={setDisplayName}
-                    error="Name cannot be empty..." 
+                    error={ErrorTypes.Cannot_Be_Empty}
             />
             
-            <><Button title="Change" onPress={function () { edit(new User(email, displayName)); } } />
-            <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } /></>
+            <><Button title="CHANGE" onPress={function () { edit(new User(email, displayName)); } } color="green" />
+            <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } color="grey" /></>
         </View>
     )
 

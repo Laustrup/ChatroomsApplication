@@ -1,4 +1,4 @@
-import { FlatList, View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { FlatList, View, Text, TextInput, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage, deleteBoard } from "../../store/actions/board.action";
 import React, { useState } from "react";
@@ -7,25 +7,31 @@ import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Message } from "../../entities/Message";
+import { RootState } from "../../App";
+import { ErrorTypes } from "../../entities/ErrorTypes";
+import Input from "../../components/Input";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
     "BOARD"
 >
 
-export default function ChatScreen() {
+export default function BoardScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
 
+    const board = useSelector((state: RootState) => state.board.board);
     const [content, setContent] = useState("");
 
     const dispatch = useDispatch();
 
     return (
         <View style={style.container}>
-            
+
+            <Text>{board.title}</Text>
+
             <FlatList 
-                data={useSelector((state: any) => state.board.messages)}
+                data={board.messages}
                 renderItem={function({item}: {item:Message}) { return (
                     <>
                         <Text>{item.timestamp}</Text>
@@ -33,6 +39,13 @@ export default function ChatScreen() {
                     </>
                 )
                 }}
+            />
+
+            <Input 
+                placeholder={"Coneten..."}
+                input={content}
+                set={setContent}
+                error={ErrorTypes.Cannot_Be_Empty}
             />
 
             <TextInput 
@@ -43,13 +56,13 @@ export default function ChatScreen() {
 
             <Button title="WRITE MESSAGE" onPress={function() {
                 dispatch(addMessage(new Message(content)));}
-            } />
+            } color="green" />
             <Button title="DELETE BOARD" onPress={function() {
                 deleteBoard(useSelector((state: any) => state.board.board));
                 navigation.navigate("DASHBOARD");
                 }
-            }></Button>
-            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}}/>
+            } color="red" />
+            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}} color="grey"/>
         </View>
     );
 }

@@ -3,6 +3,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { useDispatch } from "react-redux";
+import Input from "../../components/Input";
+import { ErrorTypes } from "../../entities/ErrorTypes";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { login } from "../../store/actions/user.actions";
 import { StackParamList } from "../../typings/navigations";
@@ -15,12 +17,23 @@ export default function IntroductionScreen() {
 
     return (
         <View style={style.container}>
-            <Text>Welcome to Shout!</Text>
+            <Text>UNBORED BOARDS</Text>
 
-            <TextInput value={email} placeholder="Type your email..." onChangeText={setEmail} />
-            <TextInput value={password} placeholder="Type your password" onChangeText={setPassword} secureTextEntry />
+            <Input placeholder="E-mail..." 
+                    input={email} 
+                    set={setEmail}
+                    error={ErrorTypes.Login_Not_Accepted}
+            />
+            <Input placeholder="Password..." 
+                    input={password} 
+                    set={setPassword}
+                    error={ErrorTypes.Login_Not_Accepted}
+                    isSecureTextEntry={true}
+            />
 
-            <Button title="LOGIN" onPress={function() {dispatch(login(email,password))}} />
+            <Button title="LOGIN"
+                    onPress={function() {dispatch(login(email,password))}}
+                    color="green" />
         </View>
     )
 }

@@ -8,6 +8,8 @@ import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { fetchBoard as fetchBoard } from "../../store/actions/board.action";
+import { ErrorTypes } from "../../entities/ErrorTypes";
+import Input from "../../components/Input";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -42,15 +44,16 @@ export default function DashboardScreen() {
                 keyExtractor={item => item.title}
             /> 
             
-            <TextInput 
-                onChangeText={changeTitle}
-                value={title}
-                placeholder="Write board title..."
+            <Input 
+                placeholder={"Write board title..."}
+                input={title}
+                set={changeTitle}
+                error={ErrorTypes.Cannot_Be_Empty}
             />
 
             <Button title="Create board" onPress={function() {
                 dispatch(addBoard(new Board(title,[],boards.length+1)));}
-            }/>
+            } color="green" />
         </View>
     )
 }

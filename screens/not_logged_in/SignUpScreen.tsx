@@ -1,18 +1,16 @@
 //import * as SecureStore from 'expo-secure-store';
-import React, { useEffect, useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Button, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { rehydrateUser, signup, login } from '../../store/actions/user.actions';
+import { signup } from '../../store/actions/user.actions';
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { emailIsValid } from "../../services/ExceptionHandler";
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackParamList } from '../../typings/navigations';
+import Input from '../../components/Input';
+import { ErrorTypes } from '../../entities/ErrorTypes';
 
 export default function SignUpScreen() {
     
     const [email, setEmail] = useState("");
-    const [title, setTitle] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
 
@@ -34,12 +32,22 @@ export default function SignUpScreen() {
 
     return (
         <View style={style.container}>
-            <Text>Type the informations, in order to sign up:</Text>
-            <TextInput value={title} placeholder="Type a title..." onChangeText={setTitle} />
-            <TextInput value={password} placeholder="Type a password..." onChangeText={setPassword} secureTextEntry />
-            <TextInput value={email} placeholder="Type an email..." onChangeText={setEmail} />
+            <Text>Type in the informations, in order to sign up:</Text>
 
-            <Button title="SIGN UP" onPress={create} />
+            <Input placeholder="E-mail..." 
+                    input={email} 
+                    set={setEmail}
+                    error={ErrorTypes.Cannot_Be_Empty}
+            />
+
+            <Input placeholder="Password..." 
+                    input={password} 
+                    set={setPassword}
+                    error={ErrorTypes.Cannot_Be_Empty}
+                    isSecureTextEntry={true}
+            />
+
+            <Button title="SIGN UP" onPress={create} color="green"/>
         </View>
     )
 }
