@@ -30,7 +30,7 @@ export default function SignUpScreen() {
     }, [])
     */
     
-    const create = function() { if (emailIsValid(email)) {dispatch(signup(email,password,title));}} 
+    const create = function() { if (emailIsValid(email)) {dispatch(signup(email,password));}} 
 
     return (
         <View style={style.container}>

@@ -19,7 +19,7 @@ const chatroomReducer = (state: ReduxState = initialState, action: any) => {
             return { ...state, chatroom: state.chatroom};
         
         default: 
-            console.log("Case is default!");
+            console.log("Case is default!", action.payload);
             return state;
     }
 }

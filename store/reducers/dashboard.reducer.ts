@@ -15,10 +15,12 @@ const dashboardReducer = (state: ReduxState = initialState, action: ReduxAction)
             state.chatrooms.push(chatroom);
             return { ...state, chatrooms: [...state.chatrooms, chatroom] };
         case FETCH_CHATROOMS: 
-            console.log("Fetching chatroom");
+            console.log("Fetching chatroom!");
             return {...state, chatrooms: action.payload};
 
-        default: return state;
+        default:
+            console.log("Case is default!",action.payload)
+            return state;
     }
 }
 

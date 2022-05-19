@@ -7,6 +7,7 @@ import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User } from "../../entities/User";
+import { logout } from "../../store/actions/user.actions";
 //import { logout } from "../../store/actions/user.actions";
 
 type ScreenNavigationType = NativeStackNavigationProp<
@@ -17,20 +18,20 @@ type ScreenNavigationType = NativeStackNavigationProp<
 export default function ProfileScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
-
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
-
-    console.log("Logged in user",user)
 
     return (
         <View style={style.container}>
-            <Text>Welcome {user.title}</Text>
-
-            <Text>Your details are:</Text>
-            <Text>Email - {user.email}</Text>
+            {!user.displayName === undefined ? (
+                <><Text>Welcome {user.displayName}</Text>
+                <Text>Your details are:</Text
+                ><Text>Email - {user.email}</Text></>
+            ) : (
+                <Text>This is your profilepage, please press edit in order to set up your profile</Text>
+            )}
 
             <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}}/>
-            {/* <Button title="SIGN OUT" onPress={logout} /> */}
+            <Button title="SIGN OUT" onPress={logout} />
         </View>
     );
 }

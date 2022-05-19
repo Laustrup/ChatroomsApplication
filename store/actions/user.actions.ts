@@ -22,9 +22,9 @@ function fetchUrl(command: UrlCommand) {
     console.log("Fetch url",fetch);
     return fetch;
 }
-async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, type: string) {
+async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, type: string, password?: string) {
+    console.log(command);
     if (command == UrlCommand.Lookup) {
-        console.log("Response will lookup user!");
         responseAct(await fetch(fetchUrl(command), {
             method: "GET",
             headers: {"Content-Type": "application/json"},
@@ -35,29 +35,23 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
         }),dispatch,type);
         
     }
-    else if (command == UrlCommand.SignInWithPassword) {
-        console.log("Response will login user!");
+    else if (command == UrlCommand.SignInWithPassword || command == UrlCommand.SignUp) {
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 email: user.email,
-                password: user.password,
+                password: password,
                 returnSecureToken: true
             })
         }),dispatch,type);
     }
     else {
-        console.log("Response will be default!");
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                email: user.email,
-                password: user.password,
-                title: user.title,
-                chatrooms: user.Chatrooms,
-                photo: user.photo,
+                user,
                 returnSecureToken: true
             })
         }),dispatch,type);
@@ -75,10 +69,10 @@ async function responseAct(response: any, dispatch: any, type: string) {
 export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
 
 export const login = function(email: string, password: string) {
-    return (dispatch: any) => {firebaseResponse(new User(email,password),UrlCommand.SignInWithPassword, dispatch, LOGIN);}
+    return (dispatch: any) => {firebaseResponse(new User(email),UrlCommand.SignInWithPassword, dispatch, LOGIN, password);}
 }
-export const signup = function(email: string, password: string, title: string) {
-    return (dispatch: any) => { firebaseResponse(new User(email,password,title),UrlCommand.SignUp, dispatch, SIGNUP); }
+export const signup = function(email: string, password: string) {
+    return (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.SignUp, dispatch, SIGNUP, password); }
 }
 export const get = function(email: string) {
     return (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.Lookup, dispatch, GET); }
@@ -86,6 +80,8 @@ export const get = function(email: string) {
 export const edit = function(user: User) {
     return (dispatch: any) => { firebaseResponse(user,UrlCommand.Update, dispatch, EDIT); }
 }
+
+export const logout = function() { return (dispatch: any) => { dispatch(LOGOUT); }}
 
 /*
 // TODO

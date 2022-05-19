@@ -36,7 +36,6 @@ function ChatNavigator() {
 export default function Navigation() {
 
     const user = useSelector((state: RootState) => state.user.loggedInUser);
-    console.log(user);
 
     return (
         <NavigationContainer>

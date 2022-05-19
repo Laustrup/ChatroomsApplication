@@ -31,7 +31,7 @@ export default function DashboardScreen() {
             <Text>Your chatrooms</Text>
             
             <FlatList 
-                data={useSelector((state: any) => state.chat.chatrooms)}
+                data={useSelector((state: any) => state.dashboard.chatrooms)}
                 renderItem={function renderChatroom({item}: {item:any}) {
                     return <Button title={item.getTitle} onPress={function() {
                         // TODO get Index of current chatroom

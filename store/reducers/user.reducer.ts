@@ -21,9 +21,9 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
             return { ...state, loggedInUser: action.payload as User, idToken: action.payload.idToken }
         case LOGOUT:
             console.log("User is logged out!");
-            return { ...state,loggedInUser: null,idToken: undefined }
+            return { ...state, loggedInUser: null, idToken: undefined }
         default:
-            console.log("Case is default!");
+            console.log("Case is default!",action.payload);
             return state;
     }
 }

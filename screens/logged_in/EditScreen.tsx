@@ -19,39 +19,29 @@ export default function EditScreen() {
     const navigation = useNavigation<ScreenNavigationType>();
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
     // Variables used in this function
+
     const [email, setEmail] = useState(user.email);
-    const [title, setTitle] = useState(user.title);
-    const [password, setPassword] = useState(user.password);
-    
+    const [displayName, setDisplayName] = useState(user.displayName);
+
+    if (displayName == undefined) {setDisplayName("");}
+
     return (
         <View style={style.container}>
             <Text>Edit</Text>
-            <Input title="Email:" 
+
+            {/* <Input title="Email:" 
                     input={email} 
                     set={setEmail}
                     error="Email cannot be empty..." 
+            /> */}
+            <Input title="Display name:" 
+                    input={displayName} 
+                    set={setDisplayName}
+                    error="Name cannot be empty..." 
             />
-            <Input title="Title:" 
-                    input={title} 
-                    set={setTitle}
-                    error="Title cannot be empty..." 
-            />           
-            <Input title="Password:" 
-                    input={password} 
-                    set={setPassword}
-                    error="Password cannot be empty..." 
-            />
-            <Button title="Change" onPress={
-                function() {
-                    if (user.email != null) { edit(new User(email,title,password)); } 
-                    else { console.log("User is not logged in, therefore user can't be edited..."); }
-                } 
-            } />
-
-            <Button title="GO BACK" onPress={
-                function() {
-                    navigation.navigate("CHAT");} 
-                } />
+            
+            <><Button title="Change" onPress={function () { edit(new User(email, displayName)); } } />
+            <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } /></>
         </View>
     )
 
