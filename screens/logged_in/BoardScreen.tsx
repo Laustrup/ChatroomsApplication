@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Message } from "../../entities/Message";
 import { RootState } from "../../App";
-import { ErrorTypes } from "../../entities/ErrorTypes";
+import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
 
 type ScreenNavigationType = NativeStackNavigationProp<
@@ -42,10 +42,10 @@ export default function BoardScreen() {
             />
 
             <Input 
-                placeholder={"Coneten..."}
+                placeholder={"Content..."}
                 input={content}
                 set={setContent}
-                error={ErrorTypes.Cannot_Be_Empty}
+                error={ErrorType.Cannot_Be_Empty}
             />
 
             <TextInput 

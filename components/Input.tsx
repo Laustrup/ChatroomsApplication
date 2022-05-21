@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Text, TextInput } from 'react-native';
-import { ErrorTypes } from '../entities/ErrorTypes';
+import { ErrorType } from '../entities/ErrorType';
+import { emailIsValid, passwordCheck } from "../services/ExceptionHandler";
 import { style } from '../ressources.styles.stylesheets/GlobalStyle';
 
 const Input = ({title, input, error, set, isSecureTextEntry, placeholder}:
-    {title?: string, input: string | undefined, error?: ErrorTypes, errorMessage?: string,
+    {title?: string, input: string | undefined, error?: ErrorType,
         set: (i: string) => void, isSecureTextEntry?: boolean, placeholder?: string}) => {
 
-    if (placeholder==undefined) {placeholder="";}
+    if (placeholder===undefined) {placeholder="";}
+    if (input===undefined) {set("");}
 
     const [entered, isEntered] = useState(false);
 
@@ -36,10 +38,16 @@ const Input = ({title, input, error, set, isSecureTextEntry, placeholder}:
                 secureTextEntry />
                 )
             }
-            {error == ErrorTypes.Cannot_Be_Empty && input === "" && entered ? <Text>{error}</Text> : <></>}
-            
-            {/* TODO */}
-            {error == ErrorTypes.Login_Not_Accepted && false ? <Text>{error}</Text> : <></>}
+
+            {error !== undefined && input!==undefined && entered ? (
+                <>
+                    {input === "" && ErrorType.Cannot_Be_Empty ? <Text>{error}</Text> : 
+                        <>
+                            {error == ErrorType.Password && !passwordCheck(input) ? <Text>{ErrorType.Password}</Text> : <></>}
+                            {error == ErrorType.Email && !emailIsValid(input) ? <Text>{ErrorType.Email}</Text> : <></>}     
+                        </>
+                    }
+                </> ) : (<></>)}
         </>
 
     );

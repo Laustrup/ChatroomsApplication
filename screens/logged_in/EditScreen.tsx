@@ -9,7 +9,7 @@ import { StackParamList } from '../../typings/navigations';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { edit } from '../../store/actions/user.actions';
-import { ErrorTypes } from '../../entities/ErrorTypes';
+import { ErrorType } from '../../entities/ErrorType';
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -38,7 +38,7 @@ export default function EditScreen() {
             <Input title="Display name:" 
                     input={displayName} 
                     set={setDisplayName}
-                    error={ErrorTypes.Cannot_Be_Empty}
+                    error={ErrorType.Cannot_Be_Empty}
             />
             
             <><Button title="CHANGE" onPress={function () { edit(new User(email, displayName)); } } color="green" />

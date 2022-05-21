@@ -8,7 +8,7 @@ import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { fetchBoard as fetchBoard } from "../../store/actions/board.action";
-import { ErrorTypes } from "../../entities/ErrorTypes";
+import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
 
 type ScreenNavigationType = NativeStackNavigationProp<
@@ -48,7 +48,7 @@ export default function DashboardScreen() {
                 placeholder={"Write board title..."}
                 input={title}
                 set={changeTitle}
-                error={ErrorTypes.Cannot_Be_Empty}
+                error={ErrorType.Cannot_Be_Empty}
             />
 
             <Button title="Create board" onPress={function() {

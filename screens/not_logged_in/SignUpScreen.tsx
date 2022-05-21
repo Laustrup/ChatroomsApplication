@@ -6,7 +6,7 @@ import { signup } from '../../store/actions/user.actions';
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { emailIsValid } from "../../services/ExceptionHandler";
 import Input from '../../components/Input';
-import { ErrorTypes } from '../../entities/ErrorTypes';
+import { ErrorType } from '../../entities/ErrorType';
 
 export default function SignUpScreen() {
     
@@ -37,13 +37,13 @@ export default function SignUpScreen() {
             <Input placeholder="E-mail..." 
                     input={email} 
                     set={setEmail}
-                    error={ErrorTypes.Cannot_Be_Empty}
+                    error={ErrorType.Email}
             />
 
             <Input placeholder="Password..." 
                     input={password} 
                     set={setPassword}
-                    error={ErrorTypes.Cannot_Be_Empty}
+                    error={ErrorType.Password}
                     isSecureTextEntry={true}
             />
 
