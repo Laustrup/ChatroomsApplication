@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TextInput } from 'react-native';
 import { ErrorType } from '../entities/ErrorType';
 import { emailIsValid, passwordCheck } from "../services/ExceptionHandler";
-import { style } from '../ressources.styles.stylesheets/GlobalStyle';
+import { styles } from '../ressources/styles/sheets/GlobalStyle';
 
 const Input = ({title, input, error, set, isSecureTextEntry, placeholder}:
     {title?: string, input: string | undefined, error?: ErrorType,
@@ -27,14 +27,14 @@ const Input = ({title, input, error, set, isSecureTextEntry, placeholder}:
                 onChangeText={handleText}
                 onBlur={ function() { isEntered(true) }}
                 placeholder={placeholder}
-                style={style.input} />
+                style={styles.input} />
             ) : (
                 <TextInput
                 value={input}
                 onChangeText={handleText}
                 onBlur={ function() { isEntered(true) }}
                 placeholder={placeholder}
-                style={style.input}
+                style={styles.input}
                 secureTextEntry />
                 )
             }

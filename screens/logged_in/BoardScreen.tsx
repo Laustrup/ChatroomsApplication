@@ -1,8 +1,8 @@
-import { FlatList, View, Text, TextInput, Button } from "react-native";
+import { FlatList, View, Text, TextInput, Button, ImageBackground } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage, deleteBoard } from "../../store/actions/board.action";
 import React from "react";
-import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
+import { backgroundImage, styles } from "../../ressources/styles/sheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -27,41 +27,44 @@ export default function BoardScreen() {
     const dispatch = useDispatch();
 
     return (
-        <View style={style.container}>
+        <View style={styles.backgroundContainer}>
+            <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
+                <View style={styles.contentContainer}>
+                    <Text>{board.title}</Text>
 
-            <Text>{board.title}</Text>
+                    <FlatList 
+                        data={board.messages}
+                        renderItem={function({item}: {item:Message}) { return (
+                            <>
+                                <Text>{item.timestamp}</Text>
+                                <Text>{item.content}</Text>
+                            </>
+                        )
+                        }}
+                    />
 
-            <FlatList 
-                data={board.messages}
-                renderItem={function({item}: {item:Message}) { return (
-                    <>
-                        <Text>{item.timestamp}</Text>
-                        <Text>{item.content}</Text>
-                    </>
-                )
-                }}
-            />
-
-            <View style={style.container}>
-                <Input
-                    placeholder={"Content..."}
-                    input={content}
-                    set={setContent}
-                    error={ErrorType.Cannot_Be_Empty}
-                />
-                <Button title="WRITE MESSAGE" onPress={function() {
-                    dispatch(addMessage(new Message(content,user)));}
-                } color="green" />
-                {board.user === user ? 
-                    <Button title="DELETE BOARD" onPress={function() {
-                        deleteBoard(useSelector((state: any) => state.board.board));
-                        navigation.navigate("DASHBOARD");
+                    <View style={styles.innerContainer}>
+                        <Input
+                            placeholder={"Content..."}
+                            input={content}
+                            set={setContent}
+                            error={ErrorType.Cannot_Be_Empty}
+                        />
+                        <Button title="WRITE MESSAGE" onPress={function() {
+                            dispatch(addMessage(new Message(content,user)));}
+                        } color="green" />
+                        {board.user === user ? 
+                            <Button title="DELETE BOARD" onPress={function() {
+                                deleteBoard(useSelector((state: any) => state.board.board));
+                                navigation.navigate("DASHBOARD");
+                                }
+                            } color="red" /> : <></>
                         }
-                    } color="red" /> : <></>
-                }
-            </View>
-            
-            <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}} color="grey"/>
+                    </View>
+                    
+                    <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}} color="grey"/>
+                </View>
+            </ImageBackground>
         </View>
     );
 }

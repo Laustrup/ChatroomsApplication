@@ -24,8 +24,8 @@ function fetchUrl(command: UrlCommand) {
     return fetch;
 }
 async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, type: string, password?: string) {
-    console.log(command);
     if (command == UrlCommand.SignInWithPassword || command == UrlCommand.SignUp) {
+        console.log("User will be " + command + "!",user);
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -37,6 +37,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
         }),dispatch,type);
     }
     if (command == UrlCommand.Delete) {
+        console.log("User will be deleted!",user);
         responseAct(await fetch(fetchUrl(command), {
             method: "DELETE",
             headers: {"Content-Type": "application/json"},
@@ -44,6 +45,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
         }),dispatch,type);
     }
     else {
+        console.log("User action is default!")
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},

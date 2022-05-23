@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Button} from "react-native";
+import { View, Text, Button, ImageBackground} from "react-native";
 import { useSelector } from "react-redux";
-import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
+import { backgroundImage, styles } from "../../ressources/styles/sheets/GlobalStyle";
 import { RootState } from "../../App";
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
@@ -21,20 +21,24 @@ export default function ProfileScreen() {
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
 
     return (
-        <View style={style.container}>
-            {!user.displayName === undefined ? (
-                <><Text>Welcome {user.displayName}</Text>
-                <Text>Your details are:</Text
-                ><Text>Email - {user.email}</Text></>
-            ) : (
-                <Text>This is your profilepage, please press edit in order to set up your profile</Text>
-            )}
+        <View style={styles.backgroundContainer}>
+            <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
+                <View style={styles.contentContainer}>
+                    {!user.displayName === undefined ? (
+                        <><Text>Welcome {user.displayName}</Text>
+                        <Text>Your details are:</Text
+                        ><Text>Email - {user.email}</Text></>
+                    ) : (
+                        <Text>This is your profilepage, please press edit in order to set up your profile</Text>
+                    )}
 
-            <View style={style.container}>
-                <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}} color="grey"/>
-                <Button title="SIGN OUT" onPress={logout} color="red" />
-            </View>
-
+                    <View style={styles.innerContainer}>
+                        <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}} color="grey"/>
+                        <Button title="SIGN OUT" onPress={logout} color="red" />
+                    </View>
+                
+                </View>
+            </ImageBackground>
         </View>
     );
 }

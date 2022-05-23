@@ -1,9 +1,9 @@
 //import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, ImageBackground, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signup } from '../../store/actions/user.actions';
-import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
+import { styles, backgroundImage } from "../../ressources/styles/sheets/GlobalStyle";
 import { emailIsValid } from "../../services/ExceptionHandler";
 import Input from '../../components/Input';
 import { ErrorType } from '../../entities/ErrorType';
@@ -31,23 +31,28 @@ export default function SignUpScreen() {
     const create = function() { if (emailIsValid(email)) {dispatch(signup(email,password));}} 
 
     return (
-        <View style={style.container}>
-            <Text>Type in the informations, in order to sign up:</Text>
+        <View style={styles.backgroundContainer}>
+            <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
+                <View style={styles.contentContainer}>
+                    
+                    <Text>Type in the informations, in order to sign up:</Text>
 
-            <Input placeholder="E-mail..." 
-                    input={email} 
-                    set={setEmail}
-                    error={ErrorType.Email}
-            />
+                    <Input placeholder="E-mail..." 
+                            input={email} 
+                            set={setEmail}
+                            error={ErrorType.Email}
+                    />
 
-            <Input placeholder="Password..." 
-                    input={password} 
-                    set={setPassword}
-                    error={ErrorType.Password}
-                    isSecureTextEntry={true}
-            />
+                    <Input placeholder="Password..." 
+                            input={password} 
+                            set={setPassword}
+                            error={ErrorType.Password}
+                            isSecureTextEntry={true}
+                    />
 
-            <Button title="SIGN UP" onPress={create} color="green"/>
+                    <Button title="SIGN UP" onPress={create} color="green"/>
+                </View>
+            </ImageBackground>
         </View>
     )
 }

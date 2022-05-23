@@ -6,6 +6,7 @@ import boardReducer from "./store/reducers/board.reducer";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
+import { ImageBackground } from "react-native";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -15,6 +16,4 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
-
-export default function App() { return (<Provider store={store}><Navigation /></Provider>)}
+export default function App() { return (<Provider store={createStore(rootReducer, applyMiddleware(ReduxThunk))}><Navigation /></Provider>) }

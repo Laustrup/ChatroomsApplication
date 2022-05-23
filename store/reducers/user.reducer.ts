@@ -15,10 +15,10 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
             return { ...state, loggedInUser: action.payload.user, idToken: action.payload.idToken };
         case LOGIN:
             console.log("User is logged in!");
-            return { ...state, loggedInUser: action.payload as User, idToken: action.payload.idToken };   
+            return { ...state, loggedInUser: action.payload.user as User, idToken: action.payload.idToken };   
         case EDIT:
             console.log("User is edited!");
-            return { ...state, loggedInUser: action.payload as User, idToken: action.payload.idToken }
+            return { ...state, loggedInUser: action.payload.user as User, idToken: action.payload.idToken }
         case LOGOUT:
             console.log("User is logged out!");
             return { ...state, loggedInUser: null, idToken: undefined }
@@ -26,9 +26,7 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
             console.log("User will be deleted!");
             return {...state, loggedInUser: null, idToken: undefined }
             
-        default:
-            console.log("Case is default!",action.payload);
-            return state;
+        default: return state;
     }
 }
 

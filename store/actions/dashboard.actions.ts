@@ -6,22 +6,20 @@ const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatab
 export const FETCH_BOARDS = "FETCH_CHATROOMS";
 export const ADD_BOARD = "ADD_CHATROOM";
 
-async function firebaseResponse(getState: any, body?: Board) {
-    console.log(body);
-
-    if (body==undefined) {
-        console.log("Response will get boards!")
+async function firebaseResponse(getState: any, board?: Board) {
+    if (board==undefined) {
+        console.log("Response will get boards!", board);
         return (await fetch(url + getState().user.idToken, {
             method: "GET",
             headers: {"Content-Type": "application/json"}
         }));   
     }
     else {
-        console.log("Request is default!")
+        console.log("Request is default!", board);
         return (await fetch(url + getState().user.idToken, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({body,returnSecureToken: true})
+            body: JSON.stringify(board)
         }));
     }
 }

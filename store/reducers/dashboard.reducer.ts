@@ -10,15 +10,12 @@ const dashboardReducer = (state: ReduxState = initialState, action: ReduxAction)
     switch (action.type) {
         case ADD_BOARD:
             console.log("Add board payload...", action.payload);
-            const board = action.payload as Board;
-            return { ...state, boards: [...state.boards, board] };
+            return { ...state, boards: [...state.boards, action.payload as Board] };
         case FETCH_BOARDS: 
             console.log("Fetching board!");
             return {...state, boards: action.payload};
 
-        default:
-            console.log("Case is default!",action.payload)
-            return state;
+        default: return state;
     }
 }
 
