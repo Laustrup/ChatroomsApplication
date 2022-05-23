@@ -32,9 +32,10 @@ export const styles = StyleSheet.create({
         width: "fit-content",
 
         // Border
-        borderColor: '#7a42f4',
+        borderColor: "black",
         borderWidth: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderRadius:  20
     },
     backgroundContainer: {
         // Centering and flex
@@ -48,7 +49,7 @@ export const styles = StyleSheet.create({
         height: 40,
 
         // Border
-        borderColor: '#7a42f4',
+        borderColor: 'grey',
         borderWidth: 1
     },
 
@@ -56,7 +57,7 @@ export const styles = StyleSheet.create({
     backgroundImage: {
         // Size
         height: Dimensions.get('window').height,
-        width: Dimensions.get('window').height,
+        width: Dimensions.get('window').width,
 
         // Position
         justifyContent: 'center',

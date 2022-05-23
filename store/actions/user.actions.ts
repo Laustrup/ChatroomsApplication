@@ -34,7 +34,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
                 password: password,
                 returnSecureToken: true
             })
-        }),dispatch,type);
+        }), dispatch, type, user);
     }
     if (command == UrlCommand.Delete) {
         console.log("User will be deleted!",user);
@@ -42,7 +42,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
             method: "DELETE",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({user})
-        }),dispatch,type);
+        }), dispatch, type, user);
     }
     else {
         console.log("User action is default!")
@@ -53,15 +53,15 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
                 user,
                 returnSecureToken: true
             })
-        }),dispatch,type);
+        }), dispatch, type, user);
     }
 }
-async function responseAct(response: any, dispatch: any, type: string) {
+async function responseAct(response: any, dispatch: any, type: string, user: User) {
     if (!response.ok) {console.log("Response for " + type + " of user was not ok...");}
     else {
         const data: Firebase = await response.json();
         console.log("data from server", data);
-        dispatch({ type, payload: { user: new User(response.email), idToken: data.idToken}});
+        dispatch({ type, payload: { user: user, idToken: data.idToken}});
     }
 }
 
