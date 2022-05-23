@@ -1,1 +1,1 @@
-export class User {constructor(public email: string, public displayName?: string, public photoUrl?: string) {}}
+export class User {constructor(public email: string, public displayName?: string, public idToken?: string, public photoUrl?: string) {}}

@@ -8,7 +8,7 @@ import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from '../../typings/navigations';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { edit } from '../../store/actions/user.actions';
+import { edit, deleteAccount } from '../../store/actions/user.actions';
 import { ErrorType } from '../../entities/ErrorType';
 
 type ScreenNavigationType = NativeStackNavigationProp<
@@ -41,8 +41,11 @@ export default function EditScreen() {
                     error={ErrorType.Cannot_Be_Empty}
             />
             
-            <><Button title="CHANGE" onPress={function () { edit(new User(email, displayName)); } } color="green" />
-            <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } color="grey" /></>
+            <View style={style.container}>
+                <Button title="CHANGE" onPress={function () { edit(new User(email, displayName)); } } color="green" />
+                <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } color="grey" />
+                <Button title="DELETE PROFILE" onPress={deleteAccount(user)} color="red" />
+            </View>
         </View>
     )
 

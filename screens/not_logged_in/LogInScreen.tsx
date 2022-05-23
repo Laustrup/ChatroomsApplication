@@ -7,11 +7,11 @@ import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { userExists } from "../../services/ExceptionHandler";
 import { login } from "../../store/actions/user.actions";
 
-export default function IntroductionScreen() {
+export default function LoginScreen() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [loginErrorMessage, setErrorMessage] = useState("");
 
     const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ export default function IntroductionScreen() {
                         ;} }
                     color="green" />
 
-            {errorMessage === ErrorType.Login_Not_Accepted ? <Text>{errorMessage}</Text> : <></>}
+            {loginErrorMessage === ErrorType.Login_Not_Accepted ? <Text>{loginErrorMessage}</Text> : <></>}
         </View>
     )
 }

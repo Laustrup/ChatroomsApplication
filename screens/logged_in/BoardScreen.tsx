@@ -1,7 +1,7 @@
 import { FlatList, View, Text, TextInput, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage, deleteBoard } from "../../store/actions/board.action";
-import React, { useState } from "react";
+import React from "react";
 import { style } from "../../ressources.styles.stylesheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
@@ -20,8 +20,9 @@ export default function BoardScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
 
-    const board = useSelector((state: RootState) => state.board.board);
-    const [content, setContent] = useState("");
+    const board = useSelector((state: any) => state.board.board);
+    const user = useSelector((state: any) => state.user.loggedInUser);
+    const [content, setContent] = React.useState("");
 
     const dispatch = useDispatch();
 
@@ -41,27 +42,25 @@ export default function BoardScreen() {
                 }}
             />
 
-            <Input 
-                placeholder={"Content..."}
-                input={content}
-                set={setContent}
-                error={ErrorType.Cannot_Be_Empty}
-            />
-
-            <TextInput 
-                onChangeText={setContent}
-                value={content}
-                placeholder="Message..."
-            />
-
-            <Button title="WRITE MESSAGE" onPress={function() {
-                dispatch(addMessage(new Message(content)));}
-            } color="green" />
-            <Button title="DELETE BOARD" onPress={function() {
-                deleteBoard(useSelector((state: any) => state.board.board));
-                navigation.navigate("DASHBOARD");
+            <View style={style.container}>
+                <Input
+                    placeholder={"Content..."}
+                    input={content}
+                    set={setContent}
+                    error={ErrorType.Cannot_Be_Empty}
+                />
+                <Button title="WRITE MESSAGE" onPress={function() {
+                    dispatch(addMessage(new Message(content,user)));}
+                } color="green" />
+                {board.user === user ? 
+                    <Button title="DELETE BOARD" onPress={function() {
+                        deleteBoard(useSelector((state: any) => state.board.board));
+                        navigation.navigate("DASHBOARD");
+                        }
+                    } color="red" /> : <></>
                 }
-            } color="red" />
+            </View>
+            
             <Button title="DASHBOARD" onPress={function() {navigation.navigate("DASHBOARD");}} color="grey"/>
         </View>
     );

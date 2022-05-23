@@ -1,5 +1,5 @@
 import { User } from "../../entities/User";
-import { LOGIN, SIGNUP, LOGOUT, REHYDRATE_USER, EDIT } from "../actions/user.actions";
+import { LOGIN, SIGNUP, LOGOUT, REHYDRATE_USER, EDIT, DELETE } from "../actions/user.actions";
 
 interface ReduxState { loggedInUser: User | null, idToken: string | undefined }
 
@@ -22,6 +22,10 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
         case LOGOUT:
             console.log("User is logged out!");
             return { ...state, loggedInUser: null, idToken: undefined }
+        case DELETE:
+            console.log("User will be deleted!");
+            return {...state, loggedInUser: null, idToken: undefined }
+            
         default:
             console.log("Case is default!",action.payload);
             return state;

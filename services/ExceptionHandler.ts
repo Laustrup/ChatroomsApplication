@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Board } from "../entities/Board";
 
 const userUrl = "https://identitytoolkit.googleapis.com/v1/accounts:";
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
@@ -45,12 +46,18 @@ export async function userExists(email: string, password: string) {
     return response.ok;
 }
 
-export function boardTitleExists(title: string) {
-    if (title!=undefined) {
-        useSelector((state: any) => state.dashboard.boards).forEach((board: { title: string; }) => {
-            if (board.title == title) {return true;}
+export function boardTitleExists(title: string, boards: Board[]) {
+
+    console.log("Boards",  boards)
+
+    if (boards!=undefined || title!=undefined) {
+        boards.forEach((board: { title: string; }) => {
+            if (board.title == title) {
+                console.log("Board title exists!");
+                return true;}
         });
-        console.log("Board title doesn't exist!")
+        console.log("Board title doesn't exist!");
     }
+    console.log("Title",title);
     return false;
 }

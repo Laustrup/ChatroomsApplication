@@ -6,9 +6,9 @@ const url: string = "https://shout-cb02d-default-rtdb.europe-west1.firebasedatab
 export const FETCH_BOARDS = "FETCH_CHATROOMS";
 export const ADD_BOARD = "ADD_CHATROOM";
 
-// UrlCommand consists of the value of which is used in the fetch url for different actions
 async function firebaseResponse(getState: any, body?: Board) {
     console.log(body);
+
     if (body==undefined) {
         console.log("Response will get boards!")
         return (await fetch(url + getState().user.idToken, {
@@ -17,10 +17,11 @@ async function firebaseResponse(getState: any, body?: Board) {
         }));   
     }
     else {
+        console.log("Request is default!")
         return (await fetch(url + getState().user.idToken, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(body)
+            body: JSON.stringify({body,returnSecureToken: true})
         }));
     }
 }
@@ -43,10 +44,10 @@ export const fetchBoards = function() {
     };
 }
 
-export const addBoard = function(board: Board) {
+export const addBoard = function(board: Board, boards: Board[]) {
     return async (dispatch: any, getState: any) => {
 
-        if (!boardTitleExists) {
+        if (!boardTitleExists(board.title,boards)) {
             const response = await firebaseResponse(getState, board);
             
             if (!response.ok) { console.log("Response from adding board was not ok..."); }

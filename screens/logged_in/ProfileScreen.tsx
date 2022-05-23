@@ -30,8 +30,11 @@ export default function ProfileScreen() {
                 <Text>This is your profilepage, please press edit in order to set up your profile</Text>
             )}
 
-            <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}} color="grey"/>
-            <Button title="SIGN OUT" onPress={logout} color="red" />
+            <View style={style.container}>
+                <Button title="EDIT" onPress={function() {navigation.navigate("EDIT")}} color="grey"/>
+                <Button title="SIGN OUT" onPress={logout} color="red" />
+            </View>
+
         </View>
     );
 }

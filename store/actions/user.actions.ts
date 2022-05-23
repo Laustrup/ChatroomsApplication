@@ -2,20 +2,21 @@
 import { Firebase } from "../../entities/FireBase";
 import { User } from "../../entities/User";
 
-// ACtions titles for the reducer to handle
+// Action titles for the reducer to handle
 export const REHYDRATE_USER = "REHYDRATE_USER";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 export const GET = "GET";
 export const EDIT = "EDIT";
 export const LOGOUT = "LOGOUT";
+export const DELETE = "DELETE";
 
 // Fetch url values
 const url = "https://identitytoolkit.googleapis.com/v1/accounts:";
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
 
 // UrlCommand consists of the value of which is used in the fetch url for different actions
-enum UrlCommand { Update = "update", Lookup = "lookup", SignUp = "signUp", SignInWithPassword = "signInWithPassword" }
+enum UrlCommand { Update = "update", Lookup = "lookup", SignUp = "signUp", SignInWithPassword = "signInWithPassword", Delete = "delete" }
 function fetchUrl(command: UrlCommand) {
     const fetch = url + command + "?key=" + apiKey;
     // Delete this log, when testing is done
@@ -24,18 +25,7 @@ function fetchUrl(command: UrlCommand) {
 }
 async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, type: string, password?: string) {
     console.log(command);
-    if (command == UrlCommand.Lookup) {
-        responseAct(await fetch(fetchUrl(command), {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                email: user.email,
-                returnSecureToken: true
-            })
-        }),dispatch,type);
-        
-    }
-    else if (command == UrlCommand.SignInWithPassword || command == UrlCommand.SignUp) {
+    if (command == UrlCommand.SignInWithPassword || command == UrlCommand.SignUp) {
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -44,6 +34,13 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
                 password: password,
                 returnSecureToken: true
             })
+        }),dispatch,type);
+    }
+    if (command == UrlCommand.Delete) {
+        responseAct(await fetch(fetchUrl(command), {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({user})
         }),dispatch,type);
     }
     else {
@@ -69,22 +66,42 @@ async function responseAct(response: any, dispatch: any, type: string) {
 export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
 
 export const login = function(email: string, password: string) {
-    return (dispatch: any) => {firebaseResponse(new User(email),UrlCommand.SignInWithPassword, dispatch, LOGIN, password);}
+    return (dispatch: any) => {firebaseResponse(new User(email), UrlCommand.SignInWithPassword, dispatch, LOGIN, password);}
 }
 export const signup = function(email: string, password: string) {
-    return (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.SignUp, dispatch, SIGNUP, password); }
-}
-export const get = function(email: string) {
-    return (dispatch: any) => { firebaseResponse(new User(email),UrlCommand.Lookup, dispatch, GET); }
+    return (dispatch: any) => { firebaseResponse(new User(email), UrlCommand.SignUp, dispatch, SIGNUP, password); }
 }
 export const edit = function(user: User) {
-    return (dispatch: any) => { firebaseResponse(user,UrlCommand.Update, dispatch, EDIT); }
+    return (dispatch: any) => { firebaseResponse(user, UrlCommand.Update, dispatch, EDIT); }
+}
+export const deleteAccount = function(user: User) {
+    return (dispatch: any) => { firebaseResponse(user,UrlCommand.Delete,dispatch, DELETE); }
+}
+
+// TODO
+export const getUser = async function(user: User) {
+    const response = await fetch(fetchUrl(UrlCommand.Lookup), {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            idToken: user.idToken,
+            email: user.email,
+            returnSecureToken: true
+        })
+    });
+
+    if (!response.ok) {console.log("Response for " + UrlCommand.Lookup + " of user was not ok...");}
+    else {
+        const data: User = await response.json();
+        console.log("User data from server", data);
+
+        return data;
+    }
 }
 
 export const logout = function() { return (dispatch: any) => { dispatch(LOGOUT); }}
 
 /*
-// TODO
 export const logout = () => {
     SecureStore.deleteItemAsync("idToken");
     SecureStore.deleteItemAsync("user");
