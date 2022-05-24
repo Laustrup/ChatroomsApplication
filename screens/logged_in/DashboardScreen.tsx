@@ -1,4 +1,4 @@
-import { FlatList, View, Text, TextInput, StyleSheet, Button, ImageBackground } from "react-native";
+import { FlatList, View, Text, Button, ImageBackground } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { addBoard, fetchBoards } from "../../store/actions/dashboard.actions";
 import { Board } from "../../entities/Board";
@@ -10,6 +10,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { fetchBoard as fetchBoard } from "../../store/actions/board.action";
 import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
+import { publicBoards, userBoards } from "../../services/BoardService";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -17,39 +18,34 @@ type ScreenNavigationType = NativeStackNavigationProp<
 >
 
 export default function DashboardScreen() {
-    
-    useEffect(() => { dispatch(fetchBoards()) }, []);
 
     const navigation = useNavigation<ScreenNavigationType>();
 
     const user = useSelector((state: any) => state.user.loggedInUser);
     const allBoards = useSelector((state: any) => state.dashboard.boards);
 
-    // Methods for filtering boards
-    const generatePublicBoards = function() {
-        const boards = allBoards.forEach((board: { isPublic: boolean; }) => {
-            if (board.isPublic) {return board;}
-        });
-        return boards;
-    }
-    const generateUserBoards = function() {
-        const boards = allBoards.forEach((board: { user: any; }) => {
-            if (board.user ===  user) {return board;}
-        });
-        console.log(boards);
-        return boards;
-    }
-
     // Values for creating a new board
     const [title, changeTitle] = React.useState("");
-    const [showAllBoards, setShowAllBoards] = React.useState(false);
+    const [showAllBoards, setShowAllBoards] = React.useState(true);
     const [isPublic, setIsPublic] = React.useState(false);
+
+    useEffect(() => { dispatch(fetchBoards()) }, []);
 
     const publicButtonTitle = function () {
         if (isPublic) {return "PUBLIC";}
         else {return "PRIVATE";}
     }
 
+    const renderedItem = ({item}: {item: any}) => (
+        <Text>{item.title}</Text>
+        /*
+        <Button title={item.title} onPress={function() {
+            fetchBoard(item);
+            navigation.navigate("BOARD")}
+        } />
+        */
+    )
+    
     const dispatch = useDispatch();
 
     return (
@@ -59,38 +55,28 @@ export default function DashboardScreen() {
                     {showAllBoards ? ( 
                         <View style={styles.innerContainer}>
                             <Text>Public boards</Text>
-                            <Button title="SHOW ONLY MY BOARDS" onPress={() => setShowAllBoards(false)} />
                             
                             <FlatList 
-                                data={generatePublicBoards()}
-                                renderItem={function({item}: {item: Board}) {
-                                    return <Button title={item.title} onPress={function() {
-                                        fetchBoard(item);
-                                        navigation.navigate("BOARD")}
-                                        } />
-                                    }
-                                }
+                                data={publicBoards(allBoards)}
+                                renderItem={renderedItem}
                                 keyExtractor={item => item.title}
                             />
+
+                            <Button title="SHOW ONLY MY BOARDS" onPress={() => setShowAllBoards(false)} color="grey" />
                         </View> 
                         
                         ) : (
                     
                         <View style={styles.innerContainer}>
                             <Text>Your boards</Text>
-                            <Button title="SHOW ALL BOARDS" onPress={() => setShowAllBoards(true)} />
 
                             <FlatList 
-                                data={generateUserBoards()}
-                                renderItem={function({item}: {item: Board}) {
-                                    return <Button title={item.title} onPress={function() {
-                                        fetchBoard(item);
-                                        navigation.navigate("BOARD")}
-                                        } />
-                                    }
-                                }
+                                data={userBoards(allBoards,user)}
+                                renderItem={renderedItem}
                                 keyExtractor={item => item.title}
                             />
+
+                            <Button title="SHOW ALL BOARDS" onPress={() => setShowAllBoards(true)} color="grey" />
                         </View>
                     )}
 

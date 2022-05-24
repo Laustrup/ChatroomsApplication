@@ -24,7 +24,7 @@ function fetchUrl(command: UrlCommand) {
     return fetch;
 }
 async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, type: string, password?: string) {
-    if (command == UrlCommand.SignInWithPassword || command == UrlCommand.SignUp) {
+    if (command === UrlCommand.SignInWithPassword || command === UrlCommand.SignUp) {
         console.log("User will be " + command + "!",user);
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
@@ -36,7 +36,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
             })
         }), dispatch, type, user);
     }
-    if (command == UrlCommand.Delete) {
+    if (command === UrlCommand.Delete) {
         console.log("User will be deleted!",user);
         responseAct(await fetch(fetchUrl(command), {
             method: "DELETE",
@@ -49,10 +49,7 @@ async function firebaseResponse(user: User, command: UrlCommand, dispatch: any, 
         responseAct(await fetch(fetchUrl(command), {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                user,
-                returnSecureToken: true
-            })
+            body: JSON.stringify(user)
         }), dispatch, type, user);
     }
 }
@@ -65,16 +62,29 @@ async function responseAct(response: any, dispatch: any, type: string, user: Use
     }
 }
 
-export const rehydrateUser = (user: User, idToken: string) => {return { type: REHYDRATE_USER, payload: {user,idToken} }}
+export const rehydrateUser = (user: User, idToken: string) => { return { type: REHYDRATE_USER, payload: {user,idToken} } }
 
 export const login = function(email: string, password: string) {
-    return (dispatch: any) => {firebaseResponse(new User(email), UrlCommand.SignInWithPassword, dispatch, LOGIN, password);}
+    return (dispatch: any) => { firebaseResponse(new User(email), UrlCommand.SignInWithPassword, dispatch, LOGIN, password); }
 }
 export const signup = function(email: string, password: string) {
     return (dispatch: any) => { firebaseResponse(new User(email), UrlCommand.SignUp, dispatch, SIGNUP, password); }
 }
 export const edit = function(user: User) {
-    return (dispatch: any) => { firebaseResponse(user, UrlCommand.Update, dispatch, EDIT); }
+    return async (dispatch: any) => { 
+        console.log(user);
+        responseAct(await fetch(fetchUrl(UrlCommand.Update), {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                idToken: user.idToken,
+                displayName: user.displayName,
+                photoUrl: user.photoUrl,
+                returnSecureToken: true
+            })
+        }), dispatch, EDIT, user);
+        // firebaseResponse(user, UrlCommand.Update, dispatch, EDIT); }
+    }
 }
 export const deleteAccount = function(user: User) {
     return (dispatch: any) => { firebaseResponse(user,UrlCommand.Delete,dispatch, DELETE); }

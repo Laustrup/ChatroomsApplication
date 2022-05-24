@@ -21,7 +21,6 @@ export default function EditScreen() {
     const user: User = useSelector((state: RootState) => state.user.loggedInUser);
     // Variables used in this function
 
-    const [email, setEmail] = useState(user.email);
     const [displayName, setDisplayName] = useState(user.displayName);
 
     if (displayName == undefined) {setDisplayName("");}
@@ -44,7 +43,10 @@ export default function EditScreen() {
                     />
 
                     <View style={styles.innerContainer}>
-                        <Button title="CHANGE" onPress={function () { edit(new User(email, displayName)); } } color="green" />
+                        <Button title="CHANGE" onPress={function () { 
+                            if (displayName != "") { edit(new User(user.email, displayName, user.idToken)); } 
+                            }
+                        } color="green" />
                         <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } color="grey" />
                         <Button title="DELETE PROFILE" onPress={deleteAccount(user)} color="red" />
                     </View>
