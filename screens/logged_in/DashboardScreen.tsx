@@ -38,12 +38,13 @@ export default function DashboardScreen() {
         else {return "PRIVATE";}
     }
 
-    const renderedItem = ({item}: {item: any}) => (
-        <Button title={item.title} onPress={function() {
+    /*
+    const renderedItem = function({item}: {item: any}) { 
+        return (<Button title={item.title} onPress={function() {
             fetchBoard(item);
             navigation.navigate("BOARD")}
-        } />
-    );
+            } />);
+    } */
     
     const dispatch = useDispatch();
 
@@ -52,12 +53,15 @@ export default function DashboardScreen() {
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
                 <View style={styles.contentContainer}>
                     {showAllBoards ? ( 
-                        <View style={styles.innerContainer}>
+                        <View>
                             <Text>Public boards</Text>
                             
                             <FlatList 
                                 data={publicBoards(allBoards)}
-                                renderItem={renderedItem}
+                                renderItem={({item}: {item: any}) => <Button title={item.title} onPress={function() {
+                                    fetchBoard(item);
+                                    navigation.navigate("BOARD")}
+                                    } />}
                                 keyExtractor={item => item.id}
                             />
 
@@ -66,12 +70,15 @@ export default function DashboardScreen() {
                         
                         ) : (
                     
-                        <View style={styles.innerContainer}>
+                        <View>
                             <Text>Your boards</Text>
 
                             <FlatList 
                                 data={userBoards(allBoards,user)}
-                                renderItem={renderedItem}
+                                renderItem={({item}: {item: any}) => <Button title={item.title} onPress={function() {
+                                    fetchBoard(item);
+                                    navigation.navigate("BOARD")}
+                                    } />}
                                 keyExtractor={item => item.id}
                             />
 
