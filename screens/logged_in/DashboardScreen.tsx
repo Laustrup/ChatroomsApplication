@@ -7,7 +7,7 @@ import { backgroundImage, styles } from "../../ressources/styles/sheets/GlobalSt
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { fetchBoard as fetchBoard } from "../../store/actions/board.action";
+import { fetchBoard } from "../../store/actions/board.action";
 import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
 import { publicBoards, userBoards } from "../../services/BoardService";
@@ -24,6 +24,8 @@ export default function DashboardScreen() {
     const user = useSelector((state: any) => state.user.loggedInUser);
     const allBoards = useSelector((state: any) => state.dashboard.boards);
 
+    console.log("Boards",allBoards)
+
     // Values for creating a new board
     const [title, changeTitle] = React.useState("");
     const [showAllBoards, setShowAllBoards] = React.useState(true);
@@ -37,14 +39,11 @@ export default function DashboardScreen() {
     }
 
     const renderedItem = ({item}: {item: any}) => (
-        <Text>{item.title}</Text>
-        /*
         <Button title={item.title} onPress={function() {
             fetchBoard(item);
             navigation.navigate("BOARD")}
         } />
-        */
-    )
+    );
     
     const dispatch = useDispatch();
 
@@ -59,7 +58,7 @@ export default function DashboardScreen() {
                             <FlatList 
                                 data={publicBoards(allBoards)}
                                 renderItem={renderedItem}
-                                keyExtractor={item => item.title}
+                                keyExtractor={item => item.id}
                             />
 
                             <Button title="SHOW ONLY MY BOARDS" onPress={() => setShowAllBoards(false)} color="grey" />
@@ -73,7 +72,7 @@ export default function DashboardScreen() {
                             <FlatList 
                                 data={userBoards(allBoards,user)}
                                 renderItem={renderedItem}
-                                keyExtractor={item => item.title}
+                                keyExtractor={item => item.id}
                             />
 
                             <Button title="SHOW ALL BOARDS" onPress={() => setShowAllBoards(true)} color="grey" />
@@ -97,7 +96,7 @@ export default function DashboardScreen() {
                         <Button title="Create board" onPress={function() {
                             if (title != "") {
                                 console.log("User in board",user)
-                                dispatch(addBoard(new Board(title,[],user,isPublic),allBoards));}}
+                                dispatch(addBoard(new Board(title,[],user,isPublic,""),allBoards));}}
                         } color="green" />
                     </View>
                 </View>

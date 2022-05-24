@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux";
 import { Board } from "../entities/Board";
 
 const userUrl = "https://identitytoolkit.googleapis.com/v1/accounts:";
 const apiKey = "AIzaSyBFIYtngh2gF8SQjPRfzn6k75vhYOSLAIo";
 
-// Not necessarily, since firebase validates as well.
 export function emailIsValid(email: String) {
     if (email!=undefined && email.includes("@")) {
         const splittedEmail = email.split("@");
@@ -28,7 +26,6 @@ export function passwordCheck(input: string | any) {
                 } catch {}
             }
         }
-        console.log("Password is not ok...");
     }
     return false;
 }
@@ -47,9 +44,6 @@ export async function userExists(email: string, password: string) {
 }
 
 export function boardTitleExists(title: string, boards: Board[]) {
-
-    console.log("Boards",  boards)
-
     if (boards!=undefined || title!=undefined) {
         boards.forEach((board: { title: string; }) => {
             if (board.title == title) {
@@ -58,6 +52,5 @@ export function boardTitleExists(title: string, boards: Board[]) {
         });
         console.log("Board title doesn't exist!");
     }
-    console.log("Title",title);
     return false;
 }
