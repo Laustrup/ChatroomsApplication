@@ -1,15 +1,14 @@
 import { FlatList, View, Text, TextInput, Button, ImageBackground } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessage, deleteBoard } from "../../store/actions/board.action";
 import React from "react";
 import { backgroundImage, styles } from "../../ressources/styles/sheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Message } from "../../entities/Message";
-import { RootState } from "../../App";
 import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
+import { addMessage, deleteBoard } from "../../store/actions/board.actions";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -20,8 +19,9 @@ export default function BoardScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
 
-    const board = useSelector((state: any) => state.board.board);
+    const board = useSelector((state: any) => state.board.currentBoard);
     const user = useSelector((state: any) => state.user.loggedInUser);
+
     const [content, setContent] = React.useState("");
 
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export default function BoardScreen() {
                         } color="green" />
                         {board.user === user ? 
                             <Button title="DELETE BOARD" onPress={function() {
-                                deleteBoard(useSelector((state: any) => state.board.board));
+                                deleteBoard(board);
                                 navigation.navigate("DASHBOARD");
                                 }
                             } color="red" /> : <></>

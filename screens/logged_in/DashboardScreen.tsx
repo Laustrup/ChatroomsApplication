@@ -1,13 +1,12 @@
 import { FlatList, View, Text, Button, ImageBackground } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { addBoard, fetchBoards } from "../../store/actions/dashboard.actions";
+import { addBoard, fetchBoard, fetchBoards } from "../../store/actions/board.actions";
 import { Board } from "../../entities/Board";
 import React, { useEffect } from "react";
 import { backgroundImage, styles } from "../../ressources/styles/sheets/GlobalStyle";
 import { StackParamList } from "../../typings/navigations";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { fetchBoard } from "../../store/actions/board.action";
 import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
 import { publicBoards, userBoards } from "../../services/BoardService";
@@ -22,7 +21,7 @@ export default function DashboardScreen() {
     const navigation = useNavigation<ScreenNavigationType>();
 
     const user = useSelector((state: any) => state.user.loggedInUser);
-    const allBoards = useSelector((state: any) => state.dashboard.boards);
+    const allBoards = useSelector((state: any) => state.board.boards);
 
     console.log("Boards",allBoards)
 
@@ -38,13 +37,12 @@ export default function DashboardScreen() {
         else {return "PRIVATE";}
     }
 
-    /*
     const renderedItem = function({item}: {item: any}) { 
         return (<Button title={item.title} onPress={function() {
             fetchBoard(item);
             navigation.navigate("BOARD")}
             } />);
-    } */
+    }
     
     const dispatch = useDispatch();
 
@@ -58,10 +56,7 @@ export default function DashboardScreen() {
                             
                             <FlatList 
                                 data={publicBoards(allBoards)}
-                                renderItem={({item}: {item: any}) => <Button title={item.title} onPress={function() {
-                                    fetchBoard(item);
-                                    navigation.navigate("BOARD")}
-                                    } />}
+                                renderItem={renderedItem}
                                 keyExtractor={item => item.id}
                             />
 
@@ -75,10 +70,7 @@ export default function DashboardScreen() {
 
                             <FlatList 
                                 data={userBoards(allBoards,user)}
-                                renderItem={({item}: {item: any}) => <Button title={item.title} onPress={function() {
-                                    fetchBoard(item);
-                                    navigation.navigate("BOARD")}
-                                    } />}
+                                renderItem={renderedItem}
                                 keyExtractor={item => item.id}
                             />
 
