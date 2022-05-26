@@ -39,9 +39,9 @@ export default function DashboardScreen() {
 
     const renderedItem = function({item}: {item: any}) { 
         return (<Button title={item.title} onPress={function() {
-            fetchBoard(item);
+            fetchBoard(item,dispatch);
             navigation.navigate("BOARD")}
-            } />);
+        } />);
     }
     
     const dispatch = useDispatch();

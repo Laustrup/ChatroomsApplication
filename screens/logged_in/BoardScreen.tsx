@@ -9,6 +9,8 @@ import { Message } from "../../entities/Message";
 import { ErrorType } from "../../entities/ErrorType";
 import Input from "../../components/Input";
 import { addMessage, deleteBoard } from "../../store/actions/board.actions";
+import { Board } from "../../entities/Board";
+import { User } from "../../entities/User";
 
 type ScreenNavigationType = NativeStackNavigationProp<
     StackParamList,
@@ -19,8 +21,8 @@ export default function BoardScreen() {
 
     const navigation = useNavigation<ScreenNavigationType>();
 
-    const board = useSelector((state: any) => state.board.currentBoard);
-    const user = useSelector((state: any) => state.user.loggedInUser);
+    const board: Board = useSelector((state: any) => state.board.currentBoard);
+    const user: User = useSelector((state: any) => state.user.loggedInUser);
 
     const [content, setContent] = React.useState("");
 
@@ -30,20 +32,26 @@ export default function BoardScreen() {
         <View style={styles.backgroundContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
                 <View style={styles.contentContainer}>
-                    <Text>{board.title}</Text>
+                    <View>
+                        <Text>{board.title}</Text>
+                        <Text>Created - {board.timeDisplay}</Text>
+                    </View>
 
-                    <FlatList 
-                        data={board.messages}
-                        renderItem={function({item}: {item:Message}) { return (
-                            <>
-                                <Text>{item.timestamp}</Text>
-                                <Text>{item.content}</Text>
-                            </>
-                        )
-                        }}
-                    />
+                    <View>
+                        <FlatList 
+                            data={board.messages}
+                            renderItem={function({item}: {item:Message}) { return (
+                                <View>
+                                    <Text>Written - {item.timeDisplay}</Text>
+                                    {item.author.displayName != undefined ? <Text>By - {item.author.displayName}</Text> : <></> }
+                                    <Text>{item.content}</Text>
+                                </View>
+                            )
+                            }}
+                        />
+                    </View>
 
-                    <View style={styles.innerContainer}>
+                    <View>
                         <Input
                             placeholder={"Content..."}
                             input={content}
@@ -51,9 +59,9 @@ export default function BoardScreen() {
                             error={ErrorType.Cannot_Be_Empty}
                         />
                         <Button title="WRITE MESSAGE" onPress={function() {
-                            dispatch(addMessage(new Message(content,user)));}
+                            dispatch(addMessage(board,new Message(content,user)));}
                         } color="green" />
-                        {board.user === user ? 
+                        {board.author === user ? 
                             <Button title="DELETE BOARD" onPress={function() {
                                 deleteBoard(board);
                                 navigation.navigate("DASHBOARD");
