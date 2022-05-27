@@ -27,7 +27,7 @@ const boardReducer = (state: ReduxState = initialState, action: ReduxAction) => 
             return {...state, currentBoard: action.payload};
         case WRITE_MESSAGE:
             console.log("Write message payload...", action.payload);
-            return {...state, boards: [...state.boards, action.payload], currentBoard: action.payload}
+            return {...state, currentBoard: action.payload}
         case DELETE_BOARD:
             console.log("Delete board payload...", action.payload);
             return {...state, currentBoard: null };

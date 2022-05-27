@@ -34,10 +34,10 @@ export default function LoginScreen() {
                     />
 
                     <Button title="LOGIN"
-                            onPress={ async function() { if (await userExists(email, password) === true) {
+                            onPress={ async function() { if (await userExists(email, password) == true) {
                                 dispatch(login(email,password))} 
-                                else {  setErrorMessage(ErrorType.Login_Not_Accepted);}
-                                ;} }
+                                else { setErrorMessage(ErrorType.Login_Not_Accepted);}
+                                } }
                             color="green" />
 
                     {loginErrorMessage === ErrorType.Login_Not_Accepted ? <Text>{loginErrorMessage}</Text> : <></>}

@@ -40,7 +40,7 @@ export const fetchBoards = function() {
         if (!response.ok) { console.log("Response from fetching boards was not ok..."); }
         else {
             const data = await response.json();
-            console.log("data from response...", data.id);
+            if (data!=null) {console.log("data from response...", data.id);}
             
             let boards: Board[] = [];
 

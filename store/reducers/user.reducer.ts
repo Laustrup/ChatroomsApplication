@@ -25,7 +25,7 @@ const userReducer = (state: ReduxState = initialState, action: any) => {
             console.log("User is logged out!");
             return { ...state, loggedInUser: null, idToken: undefined }
         case DELETE:
-            console.log("User will be deleted!", action.payload.user);
+            console.log("User will be deleted!");
             return {...state, loggedInUser: null, idToken: undefined }
             
         default: return state;

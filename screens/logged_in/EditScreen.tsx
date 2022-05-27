@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, ImageBackground, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../App';
 import { User } from '../../entities/User';
 import Input from "../../components/Input";
@@ -25,6 +25,8 @@ export default function EditScreen() {
 
     if (displayName == undefined) {setDisplayName("");}
 
+    const dispatch = useDispatch();
+
     return (
         <View style={styles.backgroundContainer}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage}>
@@ -44,11 +46,14 @@ export default function EditScreen() {
 
                     <View style={styles.innerContainer}>
                         <Button title="CHANGE" onPress={function () { 
-                            if (displayName != "") { edit(new User(user.email, displayName, user.idToken)); } 
-                            }
+                            if (displayName != "") {
+                                edit(new User(user.email, displayName, user.idToken), dispatch); 
+                                navigation.navigate("PROFILE");
+                            } 
+                        }
                         } color="green" />
                         <Button title="GO BACK" onPress={function () { navigation.navigate("PROFILE"); } } color="grey" />
-                        <Button title="DELETE PROFILE" onPress={deleteAccount(user)} color="red" />
+                        <Button title="DELETE PROFILE" onPress={() => deleteAccount(user, dispatch)} color="red" />
                     </View>
 
                 </View>

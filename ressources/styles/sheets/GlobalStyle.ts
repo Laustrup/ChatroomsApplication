@@ -66,4 +66,6 @@ export const styles = StyleSheet.create({
     }
 });
 
-export const backgroundImage = { uri: "https://reactjs.org/logo-og.png" };
+// Images
+export const tabImage = { uri: "https://reactjs.org/logo-og.png" };
+export const backgroundImage = require("../images/background.jpg");

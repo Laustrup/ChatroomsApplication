@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSelector } from "react-redux";
 import { StackParamList } from "./../typings/navigations";
 import { RootState } from '../App';
@@ -31,7 +31,7 @@ function ChatNavigator() {
             <Stack.Screen name="BOARD" component={BoardScreen} />
         </Stack.Navigator>
     )
-}
+} 
 
 export default function Navigation() {
 

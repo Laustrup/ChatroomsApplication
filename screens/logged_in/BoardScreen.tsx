@@ -34,7 +34,7 @@ export default function BoardScreen() {
                 <View style={styles.contentContainer}>
                     <View>
                         <Text>{board.title}</Text>
-                        <Text>Created - {board.timeDisplay}</Text>
+                        <Text>Created - {board.timestamp.toDateString()}</Text>
                     </View>
 
                     <View>
@@ -42,7 +42,7 @@ export default function BoardScreen() {
                             data={board.messages}
                             renderItem={function({item}: {item:Message}) { return (
                                 <View>
-                                    <Text>Written - {item.timeDisplay}</Text>
+                                    <Text>Written - {() => item.timestamp.toDateString()}</Text>
                                     {item.author.displayName != undefined ? <Text>By - {item.author.displayName}</Text> : <></> }
                                     <Text>{item.content}</Text>
                                 </View>
@@ -61,7 +61,7 @@ export default function BoardScreen() {
                         <Button title="WRITE MESSAGE" onPress={function() {
                             dispatch(addMessage(board,new Message(content,user)));}
                         } color="green" />
-                        {board.author === user ? 
+                        {board.author.idToken === user.idToken ? 
                             <Button title="DELETE BOARD" onPress={function() {
                                 deleteBoard(board);
                                 navigation.navigate("DASHBOARD");
